@@ -59,10 +59,10 @@ export function partFacts<S extends BuildSlot>(
       return {
         facts: cooler.radiator
           ? [
-              { text: `${cooler.radiator.length} mm radiator` },
-              { text: `Card room ${cardClearance(cooler)} mm` },
+              { text: `Két tản nhiệt ${cooler.radiator.length} mm` },
+              { text: `Khoang GPU còn ${cardClearance(cooler)} mm` },
             ]
-          : [{ text: `${cooler.height} mm tall` }],
+          : [{ text: `Cao ${cooler.height} mm` }],
       };
     }
     case 'board': {
@@ -110,7 +110,7 @@ export function partFacts<S extends BuildSlot>(
         ],
         meter: {
           share: gpu.length / room,
-          label: `${Math.round(gpu.length)} of ${room} mm`,
+          label: `${Math.round(gpu.length)} / ${room} mm`,
           tone: gpu.length <= room ? 'ok' : 'fail',
         },
       };
@@ -123,15 +123,15 @@ export function partFacts<S extends BuildSlot>(
         gpu.connector === '8-pin' ? psu.eightPin >= 1 : psu.sixteenPin;
       return {
         facts: [
-          { text: psu.modular ? 'Modular' : 'Fixed cables' },
+          { text: psu.modular ? 'Cáp rời (Modular)' : 'Cáp liền' },
           {
-            text: psu.sixteenPin ? '12V-2x6 lead' : `${psu.eightPin} × 8-pin`,
+            text: psu.sixteenPin ? 'Dây 12V-2x6' : `${psu.eightPin} × 8-pin`,
             tone: agree(lead),
           },
         ],
         meter: {
           share: draw / psu.watts,
-          label: `${draw} of ${psu.watts} W rated`,
+          label: `${draw} / ${psu.watts} W danh định`,
           tone: draw > psu.watts ? 'fail' : psu.watts < gpu.psu ? 'warn' : 'ok',
         },
       };

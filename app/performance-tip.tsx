@@ -41,7 +41,7 @@ export default function PerformanceTip({ ready }: { ready: boolean }) {
     // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <aside
       className="performance-tip"
-      aria-label="3D performance tip"
+      aria-label="Mẹo tối ưu hiệu năng 3D"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setFocused(true)}
@@ -53,9 +53,9 @@ export default function PerformanceTip({ ready }: { ready: boolean }) {
       <Zap size={19} aria-hidden="true" />
       <div>
         <output>
-          <strong>Smoother 3D exploration</strong>
+          <strong>Khám phá 3D mượt mà hơn</strong>
           <span className="tip-copy">
-            Try enabling browser hardware acceleration for smoother rendering.
+            Hãy bật tăng tốc phần cứng trong trình duyệt để hiển thị mượt hơn.
           </span>
         </output>
         <a
@@ -63,11 +63,11 @@ export default function PerformanceTip({ ready }: { ready: boolean }) {
           target="_blank"
           rel="noreferrer"
         >
-          How to enable it <ArrowUpRight size={13} />
+          Cách bật tính năng này <ArrowUpRight size={13} />
         </a>
       </div>
       <button
-        aria-label="Dismiss performance tip"
+        aria-label="Đóng mẹo hiệu năng"
         onClick={() => setVisible(false)}
       >
         <X size={17} />

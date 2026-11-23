@@ -29,7 +29,7 @@ export const powerRoutes: readonly PowerRoute[] = [
   {
     id: 'atx',
     label: '24-pin ATX',
-    destination: 'Motherboard',
+    destination: 'Bo mạch chủ',
     voltage: '12 V · 5 V · 3.3 V',
     color: '#f4bd68',
     targets: ['gpu'],
@@ -37,13 +37,13 @@ export const powerRoutes: readonly PowerRoute[] = [
     categories: ['Power', 'Board'],
     inspect: 'motherboard',
     description:
-      'The main cable supplies the motherboard. The board also distributes power to expansion slots and onboard devices.',
+      'Dây nguồn chính cấp điện cho bo mạch chủ. Bo mạch chủ cũng phân phối điện tới các khe mở rộng và thiết bị tích hợp trên bo.',
     sources: ['psu', 'mainboardmanual'],
   },
   {
     id: 'eps',
     label: '8-pin EPS',
-    destination: 'CPU regulators',
+    destination: 'Mạch cấp nguồn CPU',
     voltage: '12 V',
     color: '#7dc9ff',
     targets: ['cpu'],
@@ -51,13 +51,13 @@ export const powerRoutes: readonly PowerRoute[] = [
     categories: ['Power', 'Board'],
     inspect: 'motherboard',
     description:
-      'A separate 12 V feed reaches the motherboard near the CPU. Voltage regulators reduce it to the lower, changing voltages the processor needs.',
+      'Đường 12 V riêng đi tới bo mạch chủ gần khu vực CPU. Mạch ổn áp VRM hạ xuống mức điện áp thấp và biến đổi theo nhu cầu của vi xử lý.',
     sources: ['psu', 'mainboardmanual', 'mpscontroller'],
   },
   {
     id: 'gpu',
     label: '12V-2x6',
-    destination: 'Graphics card',
+    destination: 'Card đồ họa',
     voltage: '12 V',
     color: '#cfabff',
     targets: ['gpu'],
@@ -65,27 +65,27 @@ export const powerRoutes: readonly PowerRoute[] = [
     categories: ['Power', 'Graphics'],
     inspect: 'graphicscard',
     description:
-      'The installed RTX 5090 has a direct auxiliary feed from the PSU as well as slot power. Regulators on the card produce lower voltages for the GPU and memory.',
+      'Card RTX 5090 được cấp nguồn phụ trực tiếp từ PSU bên cạnh nguồn qua khe cắm. Mạch ổn áp trên card tạo ra điện áp thấp hơn cho GPU và bộ nhớ.',
     sources: ['psu', 'tuf5090', 'powerdesign'],
   },
   {
     id: 'sata',
-    label: 'SATA power',
-    destination: 'SATA SSD',
-    voltage: '5 V used by this SSD',
+    label: 'Nguồn SATA',
+    destination: 'SSD SATA',
+    voltage: '5 V cho SSD này',
     color: '#7de0b7',
     targets: ['storage'],
     requires: ['psu', 'psucable', 'ssd'],
     categories: ['Power', 'Storage'],
     inspect: 'ssd',
     description:
-      'The 15-pin power connector is separate from the 7-pin SATA data connector. This representative 2.5-inch SSD uses 5 V supplied directly by the PSU.',
+      'Đầu cấp nguồn 15-pin tách biệt với đầu dữ liệu SATA 7-pin. SSD 2.5 inch đại diện này dùng điện áp 5 V cấp trực tiếp từ PSU.',
     sources: ['psu', 'samsungsata'],
   },
   {
     id: 'slot',
-    label: 'PCIe slot',
-    destination: 'Graphics card',
+    label: 'Khe PCIe',
+    destination: 'Card đồ họa',
     voltage: '12 V · 3.3 V',
     color: '#f4bd68',
     targets: ['gpu'],
@@ -93,7 +93,7 @@ export const powerRoutes: readonly PowerRoute[] = [
     categories: ['Power', 'Board', 'Graphics'],
     inspect: 'graphicscard',
     description:
-      'The motherboard supplies power through the PCIe slot too. The dashed route shows this relationship, not the layout of copper traces inside the board.',
+      'Bo mạch chủ cũng cấp điện qua khe PCIe. Đường nét đứt biểu thị mối liên kết này, không mô phỏng đường mạch đồng thực tế bên trong bo.',
     sources: ['psu', 'pcie'],
   },
 ];
@@ -126,7 +126,7 @@ const fitted = (route: PowerRoute, build: DesktopBuild | undefined) =>
 
 /** Said in place of the SATA explanation when no SATA drive is fitted. */
 const noSataDrive =
-  'This build has no SATA drive. The M.2 drive takes its power from the board through the slot it sits in, so no cable runs to it.';
+  'Cấu hình này không có ổ SATA. Ổ M.2 nhận điện trực tiếp từ bo mạch chủ qua khe cắm nên không cần dây nguồn riêng.';
 
 /** Do not leave a live-looking route attached to hidden or isolated hardware. */
 export function visiblePowerRoutes(state: PowerView): PowerRouteId[] {
@@ -179,14 +179,14 @@ export function powerPanelState(state: PowerView & { explode: number }) {
   let status: string | null = null;
   if (state.powerTarget === 'storage' && !routes.length) status = noSataDrive;
   else if (state.explode >= 9)
-    status = 'Reassemble the PC to see the power paths.';
+    status = 'Lắp lại máy tính để xem đường cấp nguồn.';
   else if (!visible.length) {
-    if (state.isolated) status = 'Leave isolation to see the power paths.';
+    if (state.isolated) status = 'Thoát chế độ cô lập để xem đường cấp nguồn.';
     else if (state.diveInto)
-      status = 'Power paths pause while opening a component.';
+      status = 'Đường cấp nguồn tạm ẩn khi đang mở linh kiện.';
     else
       status =
-        'Show the power supply, cables and destination components to see their paths.';
+        'Hãy bật hiển thị bộ nguồn, dây cáp và linh kiện đích để xem đường cấp nguồn.';
   }
   return { routes, visible, explanation, status };
 }

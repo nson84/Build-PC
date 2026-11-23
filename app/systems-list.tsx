@@ -3,7 +3,7 @@ import { systemRoot, type LevelId } from '@/lib/levels';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
-import { categories, manifest, type Category } from '@/lib/manifest';
+import { categories, categoryLabels, manifest, type Category } from '@/lib/manifest';
 import { hueOfSystem, hueStyle } from '@/lib/palette';
 
 type Props = {
@@ -35,9 +35,9 @@ export default function SystemsList({
   return (
     <div className="systems-section">
       <div className="section-heading">
-        VISIBLE SYSTEMS{' '}
+        HỆ THỐNG HIỂN THỊ{' '}
         <button onClick={onToggleAll}>
-          {visible.length === categories.length ? 'Hide all' : 'Show all'}
+          {visible.length === categories.length ? 'Ẩn tất cả' : 'Hiện tất cả'}
         </button>
       </div>
       <div className="layer-scroll">
@@ -48,13 +48,14 @@ export default function SystemsList({
                 className="category-visibility"
                 aria-pressed={visible.includes(category)}
                 aria-label={
-                  (visible.includes(category) ? 'Hide ' : 'Show ') + category
+                  (visible.includes(category) ? 'Ẩn ' : 'Hiện ') +
+                  categoryLabels[category]
                 }
                 onClick={() => onToggleCategory(category)}
               >
                 <i />
-                <span>{category}</span>
-                <small>{visible.includes(category) ? 'On' : 'Off'}</small>
+                <span>{categoryLabels[category]}</span>
+                <small>{visible.includes(category) ? 'Bật' : 'Tắt'}</small>
               </button>
               <button
                 className="category-expand"
@@ -63,9 +64,8 @@ export default function SystemsList({
                 }
                 aria-expanded={expanded === category}
                 aria-label={
-                  (expanded === category ? 'Hide ' : 'Show ') +
-                  category +
-                  ' components'
+                  (expanded === category ? 'Ẩn linh kiện ' : 'Hiện linh kiện ') +
+                  categoryLabels[category]
                 }
               >
                 <ChevronDown size={12} />
@@ -95,8 +95,8 @@ export default function SystemsList({
                         }
                         aria-label={
                           (visible.includes(category) && !hidden.includes(c.id)
-                            ? 'Hide '
-                            : 'Show ') + c.name
+                            ? 'Ẩn '
+                            : 'Hiện ') + c.name
                         }
                       />
                     </div>

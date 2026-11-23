@@ -9,10 +9,10 @@ import {
 import type { ExplorerState } from '@/lib/explorer-state';
 
 const targets: { id: PowerTarget; label: string }[] = [
-  { id: 'all', label: 'All' },
+  { id: 'all', label: 'Tất cả' },
   { id: 'cpu', label: 'CPU' },
   { id: 'gpu', label: 'GPU' },
-  { id: 'storage', label: 'Storage' },
+  { id: 'storage', label: 'Lưu trữ' },
 ];
 
 export default function PowerControls({
@@ -35,35 +35,35 @@ export default function PowerControls({
         className={
           'airflow-toggle power-toggle' + (state.power ? ' active' : '')
         }
-        aria-label={state.power ? 'Hide power flow' : 'Show power flow'}
+        aria-label={state.power ? 'Ẩn đường cấp nguồn' : 'Hiện đường cấp nguồn'}
         aria-pressed={state.power}
         aria-controls="power-flow-panel"
-        title="Trace power from the PSU to each component"
+        title="Theo dõi đường cấp điện từ bộ nguồn đến từng linh kiện"
         onClick={onToggle}
       >
         <Zap size={15} />
-        <span>Power</span>
-        <small>{state.power ? 'On' : 'Off'}</small>
+        <span>Nguồn điện</span>
+        <small>{state.power ? 'Bật' : 'Tắt'}</small>
       </button>
       {state.power && (
         <section
           className={'power-panel' + (expanded ? ' expanded' : '')}
           id="power-flow-panel"
-          aria-label="Power flow"
+          aria-label="Đường cấp nguồn"
         >
           <div className="power-heading">
-            <strong>Follow the power</strong>
-            <span>FROM THE PSU</span>
+            <strong>Theo dõi dòng điện</strong>
+            <span>TỪ BỘ NGUỒN (PSU)</span>
             <button
               className="power-legend-toggle"
               aria-expanded={expanded}
               aria-controls="power-legend"
               onClick={() => setExpanded((value) => !value)}
             >
-              {expanded ? 'Less' : 'Details'}
+              {expanded ? 'Thu gọn' : 'Chi tiết'}
             </button>
           </div>
-          <fieldset className="power-targets" aria-label="Power destination">
+          <fieldset className="power-targets" aria-label="Đích cấp nguồn">
             {targets.map((target) => (
               <button
                 key={target.id}
@@ -85,7 +85,7 @@ export default function PowerControls({
                 <button
                   onClick={() => onInspect(route.inspect)}
                   title={route.description}
-                  aria-label={`Inspect ${route.destination}: ${route.label}`}
+                  aria-label={`Kiểm tra ${route.destination}: ${route.label}`}
                 >
                   <span>
                     <strong>{route.label}</strong>
@@ -100,8 +100,9 @@ export default function PowerControls({
           </ul>
           {explanation && <p className="power-explanation">{explanation}</p>}
           <p className="power-note">
-            Colors identify routes. Arrows show direction, not speed or watts.
-            Dashed line: power through the board.
+            Màu sắc phân biệt từng tuyến dây. Mũi tên chỉ hướng dòng điện, không
+            biểu thị tốc độ hay công suất. Đường nét đứt: cấp điện xuyên qua bo
+            mạch.
           </p>
         </section>
       )}

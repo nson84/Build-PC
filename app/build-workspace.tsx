@@ -66,9 +66,9 @@ const statusIcon = {
   fail: CircleX,
 } satisfies Record<CheckStatus, typeof CircleCheck>;
 const statusWord: Record<CheckStatus, string> = {
-  ok: 'Works',
-  warn: 'Check',
-  fail: 'Problem',
+  ok: 'Tương thích',
+  warn: 'Cần kiểm tra',
+  fail: 'Xung đột',
 };
 const slotIcon = {
   processor: Cpu,
@@ -82,10 +82,10 @@ const slotIcon = {
 /** Short names for the slot tags on each check. */
 const slotTag: Record<BuildSlot, string> = {
   processor: 'CPU',
-  cooler: 'Cooler',
-  board: 'Board',
+  cooler: 'Tản',
+  board: 'Main',
   memory: 'RAM',
-  storage: 'Storage',
+  storage: 'Ổ cứng',
   graphics: 'GPU',
   power: 'PSU',
 };
@@ -176,13 +176,13 @@ export default function BuildWorkspace({
       <header className="build-topbar">
         <button className="build-back" onClick={onExit}>
           <ChevronLeft size={17} aria-hidden="true" />
-          <span>Explorer</span>
+          <span>Khám phá</span>
         </button>
         <div className="build-title">
           <span className="build-title-icon" aria-hidden="true">
             <Wrench size={17} />
           </span>
-          <h1>Build your PC</h1>
+          <h1>Tự lắp cấu hình PC</h1>
         </div>
         <ShareBuild />
       </header>
@@ -191,7 +191,7 @@ export default function BuildWorkspace({
         className={'build-panels' + (sheet ? '' : ' sheet-down')}
         data-tab={tab}
       >
-        <div className="build-tabs" role="tablist" aria-label="Build panels">
+        <div className="build-tabs" role="tablist" aria-label="Bảng lắp ráp">
           <button
             role="tab"
             aria-selected={tab === 'parts'}
@@ -200,7 +200,7 @@ export default function BuildWorkspace({
               setSheet(true);
             }}
           >
-            Parts
+            Linh kiện
             {changed > 0 && <span className="build-tab-count">{changed}</span>}
           </button>
           <button
@@ -212,7 +212,7 @@ export default function BuildWorkspace({
             }}
             className={'status-' + overall}
           >
-            Checks
+            Kiểm tra
             {flagged > 0 && (
               <span className="build-tab-count status">{flagged}</span>
             )}
@@ -220,7 +220,7 @@ export default function BuildWorkspace({
           <button
             className="build-sheet-toggle"
             aria-expanded={sheet}
-            aria-label={sheet ? 'Hide the panels' : 'Show the panels'}
+            aria-label={sheet ? 'Ẩn bảng' : 'Hiện bảng'}
             onClick={() => setSheet((shown) => !shown)}
           >
             <ChevronDown size={16} aria-hidden="true" />
@@ -230,11 +230,11 @@ export default function BuildWorkspace({
         <section
           id="build-parts"
           className={'build-parts' + (partsOpen ? '' : ' collapsed')}
-          aria-label="Parts"
+          aria-label="Linh kiện"
         >
           <PanelHead
-            title="Parts"
-            note={`${slots.length} slots`}
+            title="Linh kiện"
+            note={`${slots.length} vị trí`}
             open={partsOpen}
             side="left"
             controls="build-parts"
@@ -259,9 +259,9 @@ export default function BuildWorkspace({
                 ))}
               </ol>
               <p className="build-fixed">
-                The case stays the same in every build: an ATX tower with
-                standoffs for ATX and micro-ATX boards, room for a 420 mm card
-                and three 120 mm front fans.
+                Vỏ máy giữ nguyên cho mọi cấu hình: thùng máy ATX với ốc đệm
+                cho bo mạch ATX và micro-ATX, hỗ trợ card dài tối đa 420 mm và
+                ba quạt trước 120 mm.
               </p>
             </div>
           ) : (
@@ -272,11 +272,11 @@ export default function BuildWorkspace({
         <section
           id="build-report"
           className={'build-report' + (checksOpen ? '' : ' collapsed')}
-          aria-label="Compatibility"
+          aria-label="Tương thích"
         >
           <PanelHead
-            title="Compatibility"
-            note={plural(checks.length, 'check')}
+            title="Tương thích"
+            note={`${checks.length} mục kiểm tra`}
             open={checksOpen}
             side="right"
             controls="build-report"
@@ -286,15 +286,15 @@ export default function BuildWorkspace({
             <div className="build-scroll">
               <Report build={build} checks={checks} onShowSlot={showSlot} />
               <p className="build-note">
-                Figures are each maker’s published numbers, or measurements of
-                the modelled case. A supply below a recommendation may still run
-                the machine; one below a stated minimum is not supported by the
-                card’s maker.
+                Các thông số dựa trên công bố của nhà sản xuất hoặc kích thước
+                thực tế của vỏ máy mô phỏng. Bộ nguồn thấp hơn mức khuyến nghị
+                vẫn có thể chạy được; thấp hơn mức tối thiểu sẽ không được hãng
+                card đồ họa hỗ trợ.
               </p>
               {isCustomBuild(build) && (
                 <button className="build-restore" onClick={onRestore}>
                   <RotateCcw size={13} aria-hidden="true" />
-                  Back to the original build
+                  Khôi phục cấu hình gốc
                 </button>
               )}
             </div>
@@ -312,16 +312,16 @@ export default function BuildWorkspace({
         {fitting && (
           <output className="build-fitting" aria-live="polite">
             <LoaderCircle size={14} aria-hidden="true" />
-            Fitting the parts…
+            Đang lắp linh kiện…
           </output>
         )}
         <button aria-pressed={airflow} onClick={onToggleAirflow}>
           <Wind size={14} aria-hidden="true" />
-          Airflow
+          Luồng khí
         </button>
         <button aria-pressed={power} onClick={onTogglePower}>
           <Zap size={14} aria-hidden="true" />
-          Power
+          Nguồn điện
         </button>
       </div>
     </>
@@ -379,8 +379,8 @@ function PanelHead({
         className="build-collapse"
         aria-expanded={open}
         aria-controls={controls}
-        aria-label={`${open ? 'Hide' : 'Show'} ${title.toLowerCase()}`}
-        title={`${open ? 'Hide' : 'Show'} ${title.toLowerCase()}`}
+        aria-label={`${open ? 'Ẩn' : 'Hiện'} ${title.toLowerCase()}`}
+        title={`${open ? 'Ẩn' : 'Hiện'} ${title.toLowerCase()}`}
         onClick={onToggle}
       >
         <Icon size={16} aria-hidden="true" />
@@ -451,7 +451,7 @@ function ShareBuild() {
       <button
         className={'build-share' + (shared?.copied ? ' copied' : '')}
         onClick={copy}
-        title="Copy a link to this build"
+        title="Sao chép liên kết cấu hình này"
       >
         {shared?.copied ? (
           <Check size={15} aria-hidden="true" />
@@ -459,7 +459,7 @@ function ShareBuild() {
           <Share2 size={15} aria-hidden="true" />
         )}
         <span aria-live="polite">
-          {shared?.copied ? 'Copied' : 'Share your build'}
+          {shared?.copied ? 'Đã sao chép' : 'Chia sẻ cấu hình'}
         </span>
       </button>
       {shared && (
@@ -468,12 +468,12 @@ function ShareBuild() {
             {shared.copied ? (
               <>
                 <Check size={14} aria-hidden="true" />
-                Link copied to your clipboard
+                Đã sao chép liên kết vào bộ nhớ tạm
               </>
             ) : (
               <>
                 <Link2 size={14} aria-hidden="true" />
-                Copy this link
+                Sao chép liên kết này
               </>
             )}
           </p>
@@ -482,8 +482,8 @@ function ShareBuild() {
           </p>
           <p className="build-share-hint">
             {shared.copied
-              ? 'Paste it into a message or a post. Whoever opens it sees this build, part for part.'
-              : 'The browser did not allow copying, so the link is selected for you to copy.'}
+              ? 'Dán vào tin nhắn hoặc bài viết. Ai mở liên kết sẽ thấy đúng cấu hình từng linh kiện này.'
+              : 'Trình duyệt không cho phép tự sao chép, liên kết đã được bôi đen để bạn tự sao chép.'}
           </p>
         </div>
       )}
@@ -572,7 +572,7 @@ function SlotSection({
           {options.length > 2 && brands.length > 1 && (
             <fieldset
               className="build-filter"
-              aria-label={`Filter ${slotLabel[slot].toLowerCase()} by maker`}
+              aria-label={`Lọc ${slotLabel[slot].toLowerCase()} theo hãng`}
             >
               {(['all', ...brands] as const).map((b) => (
                 <button
@@ -581,14 +581,14 @@ function SlotSection({
                   className={b === 'all' ? '' : 'brand-' + b}
                   onClick={() => setBrand(b)}
                 >
-                  {b === 'all' ? `All ${options.length}` : brandName[b]}
+                  {b === 'all' ? `Tất cả ${options.length}` : brandName[b]}
                 </button>
               ))}
             </fieldset>
           )}
           <fieldset
             className="build-options"
-            aria-label={`${slotLabel[slot]} options`}
+            aria-label={`Tùy chọn ${slotLabel[slot]}`}
           >
             {shown.map((option) => (
               <OptionCard
@@ -672,7 +672,7 @@ function OptionCard<S extends BuildSlot>({
           ) : (
             <TriangleAlert size={12} aria-hidden="true" />
           )}
-          <em>{fit.status === 'fail' ? 'Conflicts' : 'Check'}</em>
+          <em>{fit.status === 'fail' ? 'Xung đột' : 'Kiểm tra'}</em>
           {fit.reason}
         </span>
       )}
@@ -703,7 +703,7 @@ function SlotRail({
   onShow: (slot: BuildSlot) => void;
 }) {
   return (
-    <ul className="build-rail" aria-label="Slots">
+    <ul className="build-rail" aria-label="Vị trí linh kiện">
       {slots.map(({ id, label }) => {
         const Icon = slotIcon[id];
         const status = slotStatus(checks, id);
@@ -741,9 +741,9 @@ function VerdictRail({
   return (
     <button
       className={'build-rail-verdict status-' + status}
-      title="Show compatibility"
-      aria-label={`Compatibility: ${
-        flagged ? plural(flagged, 'thing') + ' to look at' : 'everything works'
+      title="Hiện kiểm tra tương thích"
+      aria-label={`Tương thích: ${
+        flagged ? `${flagged} mục cần xem` : 'tất cả tương thích'
       }`}
       onClick={onShow}
     >
@@ -766,9 +766,9 @@ function PowerBudget({ build }: { build: DesktopBuild }) {
   return (
     <div className={'build-power' + (over ? ' over' : '')}>
       <div className="build-power-head">
-        <span>Rated draw</span>
+        <span>Công suất danh định</span>
         <strong>
-          {cpu + gpu} W <small>of {supply} W</small>
+          {cpu + gpu} W <small>/ {supply} W</small>
         </strong>
       </div>
       {/* The figures are in the heading and the key; this is their picture. */}
@@ -799,14 +799,14 @@ function Key({ slot, children }: { slot: BuildSlot; children: ReactNode }) {
 }
 
 const groupTitle: Record<CheckStatus, string> = {
-  fail: 'Problems to fix',
-  warn: 'Worth checking',
-  ok: 'Passing',
+  fail: 'Vấn đề cần sửa',
+  warn: 'Nên kiểm tra',
+  ok: 'Đạt chuẩn',
 };
 const countWord: Record<CheckStatus, string> = {
-  fail: 'to fix',
-  warn: 'to check',
-  ok: 'pass',
+  fail: 'cần sửa',
+  warn: 'cần xem',
+  ok: 'đạt',
 };
 
 /** The checks under each result, worst first. */
@@ -883,7 +883,7 @@ function Report({
             </section>
           ),
       )}
-      <section className="build-check-group status-ok" aria-label="Passing">
+      <section className="build-check-group status-ok" aria-label="Đạt chuẩn">
         <button
           className="build-passing"
           aria-expanded={passing}
@@ -891,8 +891,8 @@ function Report({
         >
           <CircleCheck size={14} aria-hidden="true" />
           {groups.ok.length === checks.length
-            ? `All ${checks.length} checks pass`
-            : `${plural(groups.ok.length, 'check')} passing`}
+            ? `Tất cả ${checks.length} mục đều đạt`
+            : `${groups.ok.length} mục đạt`}
           <ChevronDown size={14} aria-hidden="true" />
         </button>
         {passing && <ul className="build-checks">{groups.ok.map(row)}</ul>}
@@ -921,13 +921,13 @@ function Verdict({
       <output>
         <strong>
           {overall === 'ok'
-            ? 'Everything works together'
+            ? 'Mọi linh kiện đều tương thích'
             : overall === 'warn'
-              ? `Works, with ${plural(count('warn'), 'thing')} to check`
-              : `${plural(count('fail'), 'problem')} to fix`}
+              ? `Hoạt động được, có ${count('warn')} mục cần lưu ý`
+              : `Có ${count('fail')} vấn đề cần sửa`}
         </strong>
         <small>
-          {count('ok')} of {total} checks pass
+          Đạt {count('ok')} / {total} mục kiểm tra
         </small>
       </output>
       <span className="build-tally" aria-hidden="true">
@@ -1006,7 +1006,7 @@ function CheckRow({
                   style={tint(slot)}
                   onClick={() => onShowSlot(slot)}
                 >
-                  Change the {slotLabel[slot].toLowerCase()}
+                  Đổi {slotLabel[slot].toLowerCase()}
                   <ChevronRight size={13} aria-hidden="true" />
                 </button>
               ))}

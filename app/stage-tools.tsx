@@ -20,7 +20,8 @@ import type { LevelId } from '@/lib/levels';
 import type { ReactNode } from 'react';
 
 const views = ['perspective', 'top', 'front', 'back'] as const;
-const viewLabels = ['3D', 'TOP', 'FRONT', 'BACK'];
+const viewLabels = ['3D', 'TRÊN', 'TRƯỚC', 'SAU'];
+const viewNames = ['Góc nhìn 3D', 'Nhìn từ trên', 'Nhìn từ trước', 'Nhìn từ sau'];
 
 type Props = {
   children?: ReactNode;
@@ -86,17 +87,17 @@ export default function StageTools({
         });
     } catch {
       setFullscreenError(
-        'Fullscreen is blocked by this browser. Press F11 instead.',
+        'Trình duyệt đang chặn chế độ toàn màn hình. Hãy nhấn F11.',
       );
     }
   }, []);
 
   return (
     <div className="stage-tools">
-      <div className="view-controls" aria-label="Camera controls">
+      <div className="view-controls" aria-label="Điều khiển góc nhìn">
         {views.map((option, i) => {
           const active = flattened ? option === 'top' : view === option;
-          const name = option[0].toUpperCase() + option.slice(1) + ' view';
+          const name = viewNames[i];
           return (
             <button
               key={option}
@@ -113,8 +114,8 @@ export default function StageTools({
         })}
         <span />
         <button
-          title={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-          aria-label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          title={fullscreen ? 'Thoát toàn màn hình' : 'Toàn màn hình'}
+          aria-label={fullscreen ? 'Thoát toàn màn hình' : 'Toàn màn hình'}
           aria-pressed={fullscreen}
           className={fullscreen ? 'active' : ''}
           onClick={() => void toggleFullscreen()}
@@ -127,18 +128,18 @@ export default function StageTools({
           className={'airflow-toggle' + (showingAirflow ? ' active' : '')}
           title={
             showingAirflow
-              ? 'Hide the path the air takes'
+              ? 'Ẩn đường đi của luồng khí'
               : assembled
-                ? 'Show the path the air takes through the machine'
-                : 'Show airflow — it draws on the assembled machine'
+                ? 'Hiện đường đi của luồng khí trong máy'
+                : 'Hiện luồng khí — hiển thị khi máy đang lắp ráp'
           }
-          aria-label={showingAirflow ? 'Hide airflow' : 'Show airflow'}
+          aria-label={showingAirflow ? 'Ẩn luồng khí' : 'Hiện luồng khí'}
           aria-pressed={showingAirflow}
           onClick={onToggleAirflow}
         >
           <Wind size={15} />
-          <span>Airflow</span>
-          <small>{showingAirflow ? 'On' : 'Off'}</small>
+          <span>Luồng khí</span>
+          <small>{showingAirflow ? 'Bật' : 'Tắt'}</small>
         </button>
       )}
       {children}
@@ -152,16 +153,15 @@ export default function StageTools({
           >
             <EyeOff size={15} />
             <span>
-              {hiddenComponents.length} hidden component
-              {hiddenComponents.length === 1 ? '' : 's'}
+              {hiddenComponents.length} linh kiện đang ẩn
             </span>
             <ChevronDown size={14} />
           </button>
           {hiddenMenuOpen && (
             <div className="hidden-components-menu" id="hidden-components-menu">
               <div className="hidden-menu-heading">
-                <strong>Hidden on this scale</strong>
-                <button onClick={onClearHidden}>Show all</button>
+                <strong>Đang ẩn ở cấp độ này</strong>
+                <button onClick={onClearHidden}>Hiện tất cả</button>
               </div>
               <ul>
                 {hiddenComponents.map((component) => (
@@ -172,11 +172,11 @@ export default function StageTools({
                     <i />
                     <span>{component.shortName}</span>
                     <button
-                      aria-label={`Show ${component.name}`}
+                      aria-label={`Hiện ${component.name}`}
                       onClick={() => onUnhide(component.id)}
                     >
                       <Eye size={14} />
-                      Show
+                      Hiện
                     </button>
                   </li>
                 ))}

@@ -37,15 +37,15 @@ import './comparison.css';
 type Props = { initialLevel: ComparisonLevel; onExit: () => void };
 
 function framingNote(framing: ComparisonFraming, trueSizeAvailable: boolean) {
-  if (framing === 'scale') return 'Same physical scale in both panes.';
+  if (framing === 'scale') return 'Cùng tỉ lệ kích thước vật lý ở cả hai khung.';
   return trueSizeAvailable
-    ? 'Each model fits its pane. Sizes are not relative.'
-    : 'Each model fits its pane. Diagrams and illustrative parts have no physical scale.';
+    ? 'Mỗi mô hình tự vừa khung. Kích thước không phản ánh tỉ lệ thật.'
+    : 'Mỗi mô hình tự vừa khung. Sơ đồ và mô hình minh họa không có tỉ lệ vật lý.';
 }
 
 function disassemblyTitle(left: ComparisonItem, right: ComparisonItem) {
-  if (left.kind !== right.kind) return 'Explore both';
-  return left.kind === 'logical' ? 'Expand both' : 'Disassemble both';
+  if (left.kind !== right.kind) return 'Khám phá cả hai';
+  return left.kind === 'logical' ? 'Mở rộng cả hai' : 'Tháo rời cả hai';
 }
 
 type PartSelectorProps = {
@@ -62,7 +62,7 @@ function PartSelector({ side, item, buttonRef, onOpen }: PartSelectorProps) {
       className={`comparison-selector ${side}`}
       style={hueStyle(hueOfCategory(item.category))}
       ref={buttonRef}
-      aria-label={`Choose part ${sideLetter(side)}`}
+      aria-label={`Chọn linh kiện ${sideLetter(side)}`}
       aria-haspopup="dialog"
       onClick={onOpen}
     >
@@ -147,45 +147,45 @@ export default function ComparisonWorkbench({ initialLevel, onExit }: Props) {
           <button
             ref={specsButton}
             className="comparison-specs-button"
-            aria-label="Specs"
+            aria-label="Thông số"
             onClick={() =>
               setState((current) => setComparisonSpecsOpen(current, true))
             }
           >
             <BarChart3 size={16} />
-            <span>Specs</span>
+            <span>Thông số</span>
           </button>
           <button
             className="comparison-exit"
             onClick={onExit}
-            aria-label="Back to explorer"
+            aria-label="Quay lại trình khám phá"
           >
             <ChevronLeft size={17} />
-            <span>Back to explorer</span>
+            <span>Quay lại</span>
           </button>
         </div>
       </header>
-      <section className="comparison-setup" aria-label="Comparison pair">
+      <section className="comparison-setup" aria-label="Cặp so sánh">
         <div className="comparison-pair">
           {selector('left')}
           <button
             className="comparison-swap"
             onClick={() => setState(swapComparisonSides)}
-            aria-label="Swap comparison sides"
+            aria-label="Đổi chỗ hai bên"
           >
             <ArrowLeftRight size={18} />
           </button>
           {selector('right')}
         </div>
         <div className="comparison-framing">
-          <fieldset aria-label="Model scale">
+          <fieldset aria-label="Tỉ lệ mô hình">
             <button
               aria-pressed={state.framing === 'fit'}
               onClick={() =>
                 setState((current) => setComparisonFraming(current, 'fit'))
               }
             >
-              Fit each
+              Vừa khung
             </button>
             <button
               aria-pressed={state.framing === 'scale'}
@@ -195,7 +195,7 @@ export default function ComparisonWorkbench({ initialLevel, onExit }: Props) {
                 setState((current) => setComparisonFraming(current, 'scale'))
               }
             >
-              True size
+              Đúng tỉ lệ
             </button>
           </fieldset>
           <p id="comparison-scale-note">
@@ -205,7 +205,7 @@ export default function ComparisonWorkbench({ initialLevel, onExit }: Props) {
       </section>
       <fieldset
         className="comparison-mobile-switch"
-        aria-label="Visible comparison side"
+        aria-label="Khung so sánh đang xem"
       >
         {(['left', 'right'] as const).map((side) => (
           <button
@@ -215,14 +215,14 @@ export default function ComparisonWorkbench({ initialLevel, onExit }: Props) {
               setState((current) => setComparisonActiveSide(current, side))
             }
           >
-            {side === 'left' ? 'A · Left' : 'B · Right'}
+            {side === 'left' ? 'A · Trái' : 'B · Phải'}
           </button>
         ))}
       </fieldset>
       <div className="comparison-divider" aria-hidden="true" />
       <ComparisonViewer key={viewerRevision} state={viewerState} />
       <div className="sr-only" aria-live="polite">
-        Comparing {leftItem.name} with {rightItem.name}.
+        Đang so sánh {leftItem.name} với {rightItem.name}.
       </div>
       <Disassembly
         level={state.left}
@@ -232,10 +232,10 @@ export default function ComparisonWorkbench({ initialLevel, onExit }: Props) {
         onToggleAuto={toggleAuto}
         onSetExplode={setExplode}
         onReset={reset}
-        sectionLabel="Shared disassembly control"
+        sectionLabel="Điều khiển tháo rời chung"
         title={disassemblyTitle(leftItem, rightItem)}
-        sliderLabel="Disassemble or expand both models"
-        valueText={`${Math.round(state.explode)} percent for both models`}
+        sliderLabel="Tháo rời hoặc mở rộng cả hai mô hình"
+        valueText={`${Math.round(state.explode)} phần trăm cho cả hai mô hình`}
       />
       <ComparisonSpecs
         left={state.left}

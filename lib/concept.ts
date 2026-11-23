@@ -18,6 +18,17 @@ export const categories = [
 ] as const;
 export type Category = (typeof categories)[number];
 
+export const categoryLabels: Record<Category, string> = {
+  Chassis: 'Vỏ máy',
+  Cooling: 'Tản nhiệt',
+  Board: 'Bo mạch',
+  Power: 'Nguồn điện',
+  Memory: 'Bộ nhớ',
+  Storage: 'Lưu trữ',
+  Compute: 'Xử lý',
+  Graphics: 'Đồ họa',
+};
+
 export const colors: Record<Category, string> = {
   Chassis: '#a39a91',
   Cooling: '#9caebd',
@@ -59,11 +70,11 @@ export interface Concept {
 }
 
 export const physical =
-  'Illustrative geometry. Shape, placement and mechanical quantities are approximate; this is not a board layout or service model.';
+  'Hình học minh họa. Hình dạng, vị trí và thông số cơ khí mang tính ước lượng; đây không phải bản vẽ bố trí mạch hay tài liệu sửa chữa.';
 export const logical =
-  'Documented logical architecture. Block size and placement are illustrative; exact transistor-level placement is not publicly available.';
+  'Kiến trúc logic theo tài liệu công bố. Kích thước và vị trí các khối chỉ mang tính minh họa; sơ đồ bố trí bóng bán dẫn chi tiết không được công khai.';
 export const standard =
-  'Modelled to published form-factor dimensions. Component selection, population and routing are representative of the category, not of a specific product.';
+  'Mô phỏng theo kích thước chuẩn kỹ thuật đã công bố. Lựa chọn linh kiện, mật độ bố trí và đi dây mang tính đại diện cho dòng sản phẩm, không phải một sản phẩm cụ thể.';
 
 export type Entry = Omit<
   Concept,

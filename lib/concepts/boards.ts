@@ -43,15 +43,15 @@ interface BoardFacts {
 
 /** The X670E board's rows for an ATX outline. */
 const atxOutline: Patch = {
-  specifications: { Outline: '305 × 244 mm (ATX)' },
+  specifications: { 'Kích thước': '305 × 244 mm (ATX)' },
 };
 
 /** A chipset under its passive heatsink. */
 const chipset = (name: string): Patch => ({
   specifications: {
     Chipset: name,
-    Role: 'Platform I/O hub',
-    Cooling: 'Passive heatsink',
+    'Vai trò': 'Trung tâm điều phối I/O nền tảng',
+    'Tản nhiệt': 'Tản nhiệt thụ động',
   },
 });
 
@@ -59,20 +59,20 @@ const chipset = (name: string): Patch => ({
 const lga1851 = (source: SourceId): Record<'socket' | 'cpu', Patch> => ({
   socket: {
     description:
-      'An LGA 1851 land-grid array of spring contacts, under a hinged steel load plate that a lever presses down.',
+      'Socket LGA 1851 với mảng tiếp điểm lò xo, nằm dưới nắp ép thép có bản lề được cố định bằng cần gạt.',
     specifications: {
-      Type: 'Intel LGA 1851, illustrative',
-      Retention: 'Load plate and lever',
+      'Loại': 'Intel LGA 1851, minh họa',
+      'Cơ cấu giữ': 'Nắp ép và cần gạt',
     },
     sources: [source, 'corei9'],
   },
   cpu: {
     open: 'corei9',
     description:
-      'An Intel Core Ultra 9 285K in its rectangular LGA 1851 package, under a heat spreader.',
+      'Intel Core Ultra 9 285K trong gói đóng gói LGA 1851 hình chữ nhật, nằm dưới nắp tản nhiệt.',
     specifications: {
-      Package: 'Intel LGA 1851',
-      Lid: 'Integrated heat spreader',
+      'Đóng gói': 'Intel LGA 1851',
+      'Nắp tản nhiệt': 'Nắp tản nhiệt tích hợp (IHS)',
     },
     sources: ['corei9', 'arrowlake'],
   },
@@ -82,32 +82,40 @@ const facts: Record<Variant, BoardFacts> = {
   z890: {
     source: 'tufz890',
     accuracy:
-      'Built on the same layout as the X670E board, with ASUS’s Z890 specification for the socket, chipset and slot counts. The LGA 1851 socket and its loading mechanism are illustrative; component positions, routing and the rear I/O are representative, not a reproduction of this board.',
+      'Dựng trên cùng bố cục với bo mạch X670E, áp dụng thông số Z890 của ASUS cho socket, chipset và số lượng khe cắm. Socket LGA 1851 và cơ cấu lắp đặt mang tính minh họa; vị trí linh kiện, đường mạch và cụm I/O sau mang tính đại diện, không phải bản sao chép chính xác bo mạch này.',
     root: {
       id: 'z890board',
       name: 'ASUS TUF GAMING Z890-PLUS WIFI',
-      shortName: 'Z890 board',
+      shortName: 'Bo mạch Z890',
       category: 'Board',
       parent: 'motherboard',
       level: 'z890',
       open: 'z890',
       description:
-        'An ATX board for Intel’s Core Ultra (Series 2) processors, on the LGA 1851 socket and the Z890 chipset.',
+        'Bo mạch chủ ATX dành cho bộ xử lý Intel Core Ultra (Series 2), sử dụng socket LGA 1851 và chipset Z890.',
       purpose:
-        'Carries an Intel processor, its memory and its expansion. The board decides which processors a build can use: an AM5 Ryzen does not fit this socket.',
-      quantity: '1 ATX board',
+        'Gắn kết bộ xử lý Intel, bộ nhớ RAM và các card mở rộng. Bo mạch chủ quyết định cấu hình có thể dùng CPU nào: Ryzen chuẩn AM5 sẽ không lắp vừa socket này.',
+      quantity: '1 bo mạch ATX',
       specifications: {
-        'Form factor': 'ATX · 305 × 244 mm',
+        'Kiểu dáng': 'ATX · 305 × 244 mm',
         Socket: 'Intel LGA 1851',
         Chipset: 'Intel Z890',
-        Memory: '4 DDR5 DIMM slots · up to 256 GB',
-        Expansion: '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×16 at ×4',
-        'M.2': '4 slots',
+        'Bộ nhớ': '4 khe DDR5 DIMM · tối đa 256 GB',
+        'Mở rộng': '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×16 (chạy ở ×4)',
+        'M.2': '4 khe',
         SATA: '4 × 6 Gb/s',
       },
       representationType: 'physical',
       sources: ['tufz890', 'corei9'],
-      searchTerms: ['z890', 'intel', 'lga 1851', 'tuf', 'asus', 'mainboard'],
+      searchTerms: [
+        'z890',
+        'intel',
+        'lga 1851',
+        'tuf',
+        'asus',
+        'mainboard',
+        'bo mạch chủ',
+      ],
     },
     patches: {
       moboboard: atxOutline,
@@ -115,21 +123,21 @@ const facts: Record<Variant, BoardFacts> = {
       chipset: chipset('Intel Z890'),
       pcie16: {
         specifications: {
-          'From the processor': '1 × PCIe 5.0 ×16',
-          'From the chipset': '1 × PCIe 4.0 ×16, running at ×4',
+          'Từ bộ xử lý': '1 × PCIe 5.0 ×16',
+          'Từ chipset': '1 × PCIe 4.0 ×16, chạy ở ×4',
         },
       },
       pcie1: {
         specifications: {
-          Slots: '2 × PCIe 4.0 ×1',
-          'Not modeled': 'The PCIe 4.0 ×4 slot',
+          'Số khe': '2 × PCIe 4.0 ×1',
+          'Không mô phỏng': 'Khe PCIe 4.0 ×4',
         },
       },
       m2slot: {
-        quantity: '2 of 4 modeled',
+        quantity: 'Mô phỏng 2 trên 4 khe',
         specifications: {
-          'M.2_1': 'PCIe 5.0 ×4 from the processor',
-          'Board total': '4 M.2 slots',
+          M2_1: 'PCIe 5.0 ×4 từ bộ xử lý',
+          'Tổng trên bo mạch': '4 khe M.2',
         },
       },
     },
@@ -137,61 +145,70 @@ const facts: Record<Variant, BoardFacts> = {
   b650m: {
     source: 'tufb650m',
     accuracy:
-      'Built on the same layout as the X670E board, cut to the 244 × 244 mm micro-ATX outline with its lower slots, drive socket and headers moved up, and ASUS’s B650M specification for the chipset and slot counts. Component positions, routing and the rear I/O are representative, not a reproduction of this board.',
+      'Dựng trên cùng bố cục với bo mạch X670E, thu gọn xuống kích thước micro-ATX 244 × 244 mm với các khe dưới, khe ổ đĩa và chân cắm được dời lên trên, áp dụng thông số B650M của ASUS cho chipset và số lượng khe cắm. Vị trí linh kiện, đường mạch và cụm I/O sau mang tính đại diện, không phải bản sao chép chính xác bo mạch này.',
     root: {
       id: 'b650mboard',
       name: 'ASUS TUF GAMING B650M-PLUS WIFI',
-      shortName: 'B650M board',
+      shortName: 'Bo mạch B650M',
       category: 'Board',
       parent: 'motherboard',
       level: 'b650m',
       open: 'b650m',
       description:
-        'A micro-ATX AM5 board: 61 mm shorter than ATX, with the same top mounting holes and fewer slots below the graphics card.',
+        'Bo mạch chủ AM5 chuẩn micro-ATX: ngắn hơn 61 mm so với ATX, giữ nguyên các lỗ ốc phía trên và có ít khe mở rộng hơn bên dưới card đồ họa.',
       purpose:
-        'Carries the same Ryzen processors and DDR5 memory as an ATX AM5 board in a smaller outline, at the cost of expansion slots.',
-      quantity: '1 micro-ATX board',
+        'Hỗ trợ cùng dòng CPU Ryzen và RAM DDR5 như bo mạch AM5 ATX trong kích thước nhỏ gọn hơn, đánh đổi bằng số lượng khe mở rộng.',
+      quantity: '1 bo mạch micro-ATX',
       specifications: {
-        'Form factor': 'Micro-ATX · 244 × 244 mm',
+        'Kiểu dáng': 'Micro-ATX · 244 × 244 mm',
         Socket: 'AMD AM5',
         Chipset: 'AMD B650',
-        Memory: '4 DDR5 DIMM slots · up to 256 GB',
-        Expansion:
-          '1 × PCIe 4.0 ×16 · 1 × PCIe 4.0 ×16 at ×4 · 1 × PCIe 4.0 ×1',
-        'M.2': '2 slots',
+        'Bộ nhớ': '4 khe DDR5 DIMM · tối đa 256 GB',
+        'Mở rộng':
+          '1 × PCIe 4.0 ×16 · 1 × PCIe 4.0 ×16 (chạy ở ×4) · 1 × PCIe 4.0 ×1',
+        'M.2': '2 khe',
         SATA: '4 × 6 Gb/s',
       },
       representationType: 'physical',
       sources: ['tufb650m', 'ryzen'],
-      searchTerms: ['b650m', 'b650', 'micro atx', 'matx', 'am5', 'tuf', 'asus'],
+      searchTerms: [
+        'b650m',
+        'b650',
+        'micro atx',
+        'matx',
+        'am5',
+        'tuf',
+        'asus',
+        'bo mạch chủ',
+      ],
     },
     patches: {
-      moboboard: { specifications: { Outline: '244 × 244 mm (micro-ATX)' } },
+      moboboard: { specifications: { 'Kích thước': '244 × 244 mm (micro-ATX)' } },
       socket: { sources: ['tufb650m', 'ryzen'] },
       chipset: chipset('AMD B650'),
       pcie16: {
         specifications: {
-          'From the processor': '1 × PCIe 4.0 ×16',
-          'From the chipset': '1 × PCIe 4.0 ×16, running at ×4',
+          'Từ bộ xử lý': '1 × PCIe 4.0 ×16',
+          'Từ chipset': '1 × PCIe 4.0 ×16, chạy ở ×4',
         },
       },
       pcie1: {
-        quantity: '1 modeled slot',
-        specifications: { Slots: '1 × PCIe 4.0 ×1' },
+        quantity: '1 khe mô phỏng',
+        specifications: { 'Số khe': '1 × PCIe 4.0 ×1' },
       },
       m2slot: {
         specifications: {
-          'M.2_1': 'PCIe 5.0 ×4 with a Ryzen 9000',
-          'M.2_2': 'PCIe 4.0 ×4',
+          M2_1: 'PCIe 5.0 ×4 với Ryzen 9000',
+          M2_2: 'PCIe 4.0 ×4',
         },
       },
-      mobofanheader: { quantity: '4 modeled headers' },
+      mobofanheader: { quantity: '4 chân cắm mô phỏng' },
     },
   },
   tomahawk: {
     source: 'msix870',
     accuracy:
-      'Built on the same ATX layout as the X670E board, with MSI’s datasheet for the chipset, the three full-length slots and the four M.2 sockets, and its black armour with yellow trim after MSI’s product photograph. Component positions, routing and the rear I/O are representative, not a reproduction of this board.',
+      'Dựng trên cùng bố cục ATX với bo mạch X670E, dùng tài liệu kỹ thuật của MSI cho chipset, ba khe dài đầy đủ và bốn khe M.2, cùng lớp giáp đen viền vàng theo ảnh sản phẩm của MSI. Vị trí linh kiện, đường mạch và cụm I/O sau mang tính đại diện, không phải bản sao chép chính xác bo mạch này.',
     root: {
       id: 'tomahawkboard',
       name: 'MSI MAG X870 TOMAHAWK WIFI',
@@ -201,23 +218,31 @@ const facts: Record<Variant, BoardFacts> = {
       level: 'tomahawk',
       open: 'tomahawk',
       description:
-        'An ATX AM5 board from MSI on AMD’s X870 chipset, with three full-length expansion slots and four M.2 sockets.',
+        'Bo mạch chủ AM5 chuẩn ATX của MSI dùng chipset AMD X870, trang bị ba khe mở rộng dài đầy đủ và bốn khe M.2.',
       purpose:
-        'Carries a Ryzen processor, its DDR5 memory and its expansion, as the X670E board does, from a different maker.',
-      quantity: '1 ATX board',
+        'Hỗ trợ bộ xử lý Ryzen, RAM DDR5 và card mở rộng tương tự bo mạch X670E nhưng từ một nhà sản xuất khác.',
+      quantity: '1 bo mạch ATX',
       specifications: {
-        'Form factor': 'ATX · 305 × 244 mm',
+        'Kiểu dáng': 'ATX · 305 × 244 mm',
         Socket: 'AMD AM5',
         Chipset: 'AMD X870',
-        Memory: '4 DDR5 DIMM slots · up to 256 GB',
-        Expansion: '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×16 · 1 × PCIe 3.0 ×16',
+        'Bộ nhớ': '4 khe DDR5 DIMM · tối đa 256 GB',
+        'Mở rộng': '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×16 · 1 × PCIe 3.0 ×16',
         'M.2': '2 × Gen5 ×4 · 1 × Gen4 ×4 · 1 × Gen4 ×2',
         SATA: '4 × 6 Gb/s',
-        'Power stages': '14+2+1 × 80 A',
+        'Tầng công suất': '14+2+1 × 80 A',
       },
       representationType: 'physical',
       sources: ['msix870', 'kitguru870', 'ryzen'],
-      searchTerms: ['msi', 'mag', 'tomahawk', 'x870', 'am5', 'mainboard'],
+      searchTerms: [
+        'msi',
+        'mag',
+        'tomahawk',
+        'x870',
+        'am5',
+        'mainboard',
+        'bo mạch chủ',
+      ],
     },
     // Every slot below the graphics card is full length.
     absent: ['pcie1'],
@@ -226,25 +251,25 @@ const facts: Record<Variant, BoardFacts> = {
       socket: { sources: ['msix870', 'ryzen'] },
       chipset: chipset('AMD X870'),
       pcie16: {
-        name: 'PCIe ×16 slots',
-        quantity: '3 modeled slots',
+        name: 'Khe PCIe ×16',
+        quantity: '3 khe mô phỏng',
         specifications: {
-          'From the processor': '1 × PCIe 5.0 ×16',
-          'From the chipset': '1 × PCIe 4.0 ×16 at ×4 · 1 × PCIe 3.0 ×16 at ×1',
+          'Từ bộ xử lý': '1 × PCIe 5.0 ×16',
+          'Từ chipset': '1 × PCIe 4.0 ×16 (ở ×4) · 1 × PCIe 3.0 ×16 (ở ×1)',
         },
         sources: ['msix870', 'kitguru870', 'pcie'],
       },
       m2slot: {
-        quantity: '2 of 4 modeled',
+        quantity: 'Mô phỏng 2 trên 4 khe',
         specifications: {
-          'M.2_1': 'PCIe 5.0 ×4',
-          'Board total': '2 × Gen5 ×4 · 1 × Gen4 ×4 · 1 × Gen4 ×2',
+          M2_1: 'PCIe 5.0 ×4',
+          'Tổng trên bo mạch': '2 × Gen5 ×4 · 1 × Gen4 ×4 · 1 × Gen4 ×2',
         },
       },
       cpuvrm: {
         specifications: {
-          Phases: '14+2+1',
-          'Power stages': '80 A smart power stages',
+          'Số pha': '14+2+1',
+          'Tầng công suất': 'Smart power stage 80 A',
         },
         sources: ['kitguru870'],
       },
@@ -253,7 +278,7 @@ const facts: Record<Variant, BoardFacts> = {
   aorus: {
     source: 'gbz890elite',
     accuracy:
-      'Built on the same ATX layout as the X670E board, with the slots, sockets and connectors in GIGABYTE’s manual, the LGA 1851 socket of the Z890 board, and a gunmetal-and-silver finish in the maker’s style. Component positions, routing and the rear I/O are representative, not a reproduction of this board.',
+      'Dựng trên cùng bố cục ATX với bo mạch X670E, áp dụng các khe cắm, đầu nối theo tài liệu của GIGABYTE, socket LGA 1851 của bo mạch Z890 và lớp hoàn thiện xám súng – bạc theo phong cách hãng. Vị trí linh kiện, đường mạch và cụm I/O sau mang tính đại diện, không phải bản sao chép chính xác bo mạch này.',
     root: {
       id: 'aorusboard',
       name: 'GIGABYTE Z890 AORUS ELITE WIFI7',
@@ -263,22 +288,30 @@ const facts: Record<Variant, BoardFacts> = {
       level: 'aorus',
       open: 'aorus',
       description:
-        'An ATX board from GIGABYTE for Intel’s Core Ultra (Series 2) processors, on the LGA 1851 socket and the Z890 chipset, with three full-length slots and four M.2 sockets.',
+        'Bo mạch chủ ATX của GIGABYTE cho bộ xử lý Intel Core Ultra (Series 2), dùng socket LGA 1851 và chipset Z890, có ba khe dài đầy đủ và bốn khe M.2.',
       purpose:
-        'Carries an Intel processor, its memory and its expansion. An AM5 Ryzen does not fit this socket.',
-      quantity: '1 ATX board',
+        'Gắn kết bộ xử lý Intel, bộ nhớ RAM và card mở rộng. Ryzen chuẩn AM5 không lắp vừa socket này.',
+      quantity: '1 bo mạch ATX',
       specifications: {
-        'Form factor': 'ATX · 305 × 244 mm',
+        'Kiểu dáng': 'ATX · 305 × 244 mm',
         Socket: 'Intel LGA 1851',
         Chipset: 'Intel Z890',
-        Memory: '4 DDR5 DIMM sockets · up to 256 GB',
-        Expansion: '1 × PCIe 5.0 ×16 · 2 × PCIe 4.0 ×16 at ×4',
-        'M.2': '4 Socket 3 connectors',
+        'Bộ nhớ': '4 khe DDR5 DIMM · tối đa 256 GB',
+        'Mở rộng': '1 × PCIe 5.0 ×16 · 2 × PCIe 4.0 ×16 (chạy ở ×4)',
+        'M.2': '4 đầu cắm Socket 3',
         SATA: '4 × 6 Gb/s',
       },
       representationType: 'physical',
       sources: ['gbz890elite', 'corei9'],
-      searchTerms: ['gigabyte', 'aorus', 'elite', 'z890', 'intel', 'lga 1851'],
+      searchTerms: [
+        'gigabyte',
+        'aorus',
+        'elite',
+        'z890',
+        'intel',
+        'lga 1851',
+        'bo mạch chủ',
+      ],
     },
     absent: ['pcie1'],
     patches: {
@@ -286,29 +319,29 @@ const facts: Record<Variant, BoardFacts> = {
       ...lga1851('gbz890elite'),
       chipset: chipset('Intel Z890 Express'),
       pcie16: {
-        name: 'PCIe ×16 slots',
-        quantity: '3 modeled slots',
+        name: 'Khe PCIe ×16',
+        quantity: '3 khe mô phỏng',
         specifications: {
-          PCIEX16: 'PCIe 5.0 at ×16, from the processor',
-          'PCIEX4_1, PCIEX4_2': 'PCIe 4.0 at ×4, from the chipset',
+          PCIEX16: 'PCIe 5.0 chạy ở ×16, từ bộ xử lý',
+          'PCIEX4_1, PCIEX4_2': 'PCIe 4.0 chạy ở ×4, từ chipset',
         },
         sources: ['gbz890elite', 'pcie'],
       },
       m2slot: {
-        quantity: '2 of 4 modeled',
+        quantity: 'Mô phỏng 2 trên 4 khe',
         specifications: {
           M2A_CPU: 'PCIe 5.0 ×4',
           M2B_CPU: 'PCIe 4.0 ×4',
-          'M2Q_SB, M2M_SB': 'PCIe 4.0 ×4, from the chipset',
+          'M2Q_SB, M2M_SB': 'PCIe 4.0 ×4, từ chipset',
         },
       },
-      eps8: { specifications: { Connectors: '2 × 8-pin ATX 12 V' } },
+      eps8: { specifications: { 'Đầu cắm': '2 × 8-pin ATX 12 V' } },
     },
   },
   b850m: {
     source: 'asrockb850m',
     accuracy:
-      'Built on the micro-ATX layout of the B650M board, with ASRock’s manual for the chipset, the ×16 and ×4 slots and the three M.2 sockets, its large square chipset heatsink to the right where the manual draws it, and a silver finish in the maker’s style. ASRock gives the form factor, not the size; it is drawn at micro-ATX’s 244 × 244 mm. Component positions, routing and the rear I/O are representative.',
+      'Dựng trên bố cục micro-ATX của bo mạch B650M, áp dụng tài liệu của ASRock cho chipset, các khe ×16 và ×4 cùng ba khe M.2, khối tản nhiệt chipset vuông lớn bên phải như bản vẽ hướng dẫn, và tông bạc theo phong cách hãng. ASRock công bố kiểu dáng chứ không ghi kích thước cụ thể; mô hình vẽ theo chuẩn micro-ATX 244 × 244 mm. Vị trí linh kiện, đường mạch và cụm I/O sau mang tính đại diện.',
     root: {
       id: 'b850mboard',
       name: 'ASRock B850M Pro RS WiFi',
@@ -318,49 +351,57 @@ const facts: Record<Variant, BoardFacts> = {
       level: 'b850m',
       open: 'b850m',
       description:
-        'A micro-ATX AM5 board from ASRock on AMD’s B850 chipset: a PCIe 5.0 ×16 slot for the graphics card, one ×4 slot under it, and three M.2 sockets.',
+        'Bo mạch chủ AM5 chuẩn micro-ATX của ASRock trên chipset AMD B850: một khe PCIe 5.0 ×16 cho card đồ họa, một khe ×4 bên dưới và ba khe M.2.',
       purpose:
-        'Carries Ryzen 9000, 8000 and 7000 processors and DDR5 memory in a small outline, at the cost of expansion slots.',
-      quantity: '1 micro-ATX board',
+        'Hỗ trợ các bộ xử lý Ryzen 9000, 8000 và 7000 cùng RAM DDR5 trong kích thước nhỏ gọn, đánh đổi bằng số lượng khe mở rộng.',
+      quantity: '1 bo mạch micro-ATX',
       specifications: {
-        'Form factor': 'Micro-ATX',
+        'Kiểu dáng': 'Micro-ATX',
         Socket: 'AMD AM5',
         Chipset: 'AMD B850',
-        Memory: '4 DDR5 DIMM slots · up to 256 GB',
-        Expansion: '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×4',
+        'Bộ nhớ': '4 khe DDR5 DIMM · tối đa 256 GB',
+        'Mở rộng': '1 × PCIe 5.0 ×16 · 1 × PCIe 4.0 ×4',
         'M.2': '1 × Gen5 ×4 · 2 × Gen4 ×4',
         SATA: '4 × 6 Gb/s',
       },
       representationType: 'physical',
       sources: ['asrockb850m', 'ryzen'],
-      searchTerms: ['asrock', 'pro rs', 'b850m', 'b850', 'micro atx', 'am5'],
+      searchTerms: [
+        'asrock',
+        'pro rs',
+        'b850m',
+        'b850',
+        'micro atx',
+        'am5',
+        'bo mạch chủ',
+      ],
     },
     patches: {
       moboboard: {
-        specifications: { Outline: 'Micro-ATX, drawn at 244 × 244 mm' },
+        specifications: { 'Kích thước': 'Micro-ATX, vẽ ở 244 × 244 mm' },
       },
       socket: { sources: ['asrockb850m', 'ryzen'] },
       chipset: chipset('AMD B850'),
       pcie16: {
-        name: 'PCIe ×16 slot',
-        quantity: '1 modeled slot',
-        specifications: { PCIE1: 'PCIe 5.0 at ×16, from the processor' },
+        name: 'Khe PCIe ×16',
+        quantity: '1 khe mô phỏng',
+        specifications: { PCIE1: 'PCIe 5.0 chạy ở ×16, từ bộ xử lý' },
         sources: ['asrockb850m', 'pcie'],
       },
       // The single short slot is a ×4 one.
       pcie1: {
-        name: 'PCIe ×4 slot',
+        name: 'Khe PCIe ×4',
         shortName: 'PCIe ×4',
         description:
-          'A short four-lane slot under the graphics card, for a second drive on an adapter, a network card or a capture card.',
-        quantity: '1 modeled slot',
-        specifications: { PCIE2: 'PCIe 4.0 at ×4, from the processor' },
+          'Khe bốn làn ngắn nằm dưới card đồ họa, dùng cho ổ SSD thứ hai qua card chuyển, card mạng hoặc card ghi hình.',
+        quantity: '1 khe mô phỏng',
+        specifications: { PCIE2: 'PCIe 4.0 chạy ở ×4, từ bộ xử lý' },
         sources: ['asrockb850m', 'pcie'],
       },
       m2slot: {
-        quantity: '2 of 3 modeled',
+        quantity: 'Mô phỏng 2 trên 3 khe',
         specifications: {
-          M2_1: 'PCIe 5.0 ×4, from the processor',
+          M2_1: 'PCIe 5.0 ×4, từ bộ xử lý',
           'M2_2, M2_3': 'PCIe 4.0 ×4',
         },
       },

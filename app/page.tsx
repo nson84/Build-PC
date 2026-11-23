@@ -185,13 +185,13 @@ export default function Home() {
             // behind it.
             <button
               className="drawer-scrim"
-              aria-label="Close systems"
+              aria-label="Đóng danh sách hệ thống"
               onClick={() => explorer.setLayers(false)}
             />
           )}
           <aside
             className={'explorer' + (layers ? ' mobile-open' : '')}
-            aria-label="System visibility"
+            aria-label="Hiển thị hệ thống"
           >
             <ScaleNav
               level={state.level}
@@ -231,16 +231,16 @@ export default function Home() {
         onSelect={building ? pointAt : choose}
         onCount={setCount}
         onDived={explorer.arrive}
-        hoverHint={building ? 'Click to find its slot' : undefined}
+        hoverHint={building ? 'Nhấp để tìm khe lắp' : undefined}
       />
       {building ? null : (
         <>
           {count === 0 && (
             <div className="empty-scene">
               <EyeOff size={27} />
-              <h3>No structures visible</h3>
+              <h3>Không có cấu trúc nào hiển thị</h3>
               <button onClick={explorer.showEverything}>
-                Show all systems
+                Hiện tất cả hệ thống
               </button>
             </div>
           )}

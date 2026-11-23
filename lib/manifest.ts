@@ -26,7 +26,13 @@ import {
   tuf1000Concepts,
   tuf1200Concepts,
 } from './concepts/psu.ts';
-import { categories, colors, type Category, type Concept } from './concept.ts';
+import {
+  categories,
+  categoryLabels,
+  colors,
+  type Category,
+  type Concept,
+} from './concept.ts';
 import {
   isPhysical,
   levelNames,
@@ -38,6 +44,7 @@ import { sources } from './sources.ts';
 
 export {
   categories,
+  categoryLabels,
   colors,
   sources,
   levelNames,

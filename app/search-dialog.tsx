@@ -14,7 +14,7 @@ import {
   CommandEmpty,
   CommandGroup,
 } from '@/components/ui/command';
-import { byId, searchConcepts } from '@/lib/manifest';
+import { byId, categoryLabels, searchConcepts } from '@/lib/manifest';
 import { hueOfSystem, hueStyle } from '@/lib/palette';
 import { levels } from '@/lib/levels';
 
@@ -48,22 +48,22 @@ export default function SearchDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent className="search-dialog">
-        <DialogTitle>Find a component</DialogTitle>
+        <DialogTitle>Tìm linh kiện</DialogTitle>
         <DialogDescription>
-          Jump to any hardware or architecture resource.
+          Đi nhanh tới bất kỳ phần cứng hoặc thành phần kiến trúc nào.
         </DialogDescription>
         <Command shouldFilter={false}>
           <CommandInput
             value={query}
             onValueChange={onQueryChange}
-            placeholder="Try Tensor, GDDR7, L2 or SM…"
+            placeholder="Thử nhập Tensor, GDDR7, L2 hoặc SM…"
           />
           <CommandList>
             <CommandEmpty>
-              No matching components. Try “memory” or “CUDA”.
+              Không tìm thấy linh kiện phù hợp. Thử “memory” hoặc “CUDA”.
             </CommandEmpty>
             <CommandGroup
-              heading={query ? 'Matching structures' : 'Explore the specimen'}
+              heading={query ? 'Kết quả phù hợp' : 'Gợi ý khám phá'}
             >
               {(query
                 ? searchConcepts(query)
@@ -81,10 +81,10 @@ export default function SearchDialog({
                     <small>
                       <span>{levels[c.level].name}</span>
                       <em>
-                        <b>{c.category}</b> ·{' '}
+                        <b>{categoryLabels[c.category]}</b> ·{' '}
                         {c.representationType === 'logical'
-                          ? 'Logical architecture'
-                          : 'Physical hardware'}
+                          ? 'Kiến trúc logic'
+                          : 'Phần cứng vật lý'}
                       </em>
                     </small>
                   </div>
@@ -95,7 +95,7 @@ export default function SearchDialog({
           </CommandList>
         </Command>
         <div className="search-hint">
-          ↑ ↓ to browse <span>Enter to inspect</span>
+          ↑ ↓ để duyệt <span>Enter để xem</span>
         </div>
       </DialogContent>
     </Dialog>

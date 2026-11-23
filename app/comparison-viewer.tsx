@@ -37,7 +37,7 @@ export default function ComparisonViewer({ state }: Props) {
         ),
       error: reportError,
     }),
-    'The comparison viewer could not load. Reload to try again.',
+    'Không thể tải trình so sánh 3D. Vui lòng tải lại trang để thử lại.',
   );
 
   return (
@@ -46,24 +46,24 @@ export default function ComparisonViewer({ state }: Props) {
         ref={host}
         className="comparison-viewport"
         data-active-side={state.activeSide}
-        aria-label={`Synchronized 3D comparison of ${left.shortName} and ${right.shortName}`}
+        aria-label={`So sánh 3D đồng bộ giữa ${left.shortName} và ${right.shortName}`}
       >
         <section
           className="comparison-pane-a11y left"
-          aria-label={`Left viewport: ${left.name}`}
+          aria-label={`Khung trái: ${left.name}`}
         />
         <section
           className="comparison-pane-a11y right"
-          aria-label={`Right viewport: ${right.name}`}
+          aria-label={`Khung phải: ${right.name}`}
         />
       </div>
       {!ready && !error && (
-        <output className="comparison-loading">Loading both models…</output>
+        <output className="comparison-loading">Đang tải cả hai mô hình…</output>
       )}
       {error && (
         <div className="comparison-error" role="alert">
           {error}
-          <button onClick={() => location.reload()}>Reload viewer</button>
+          <button onClick={() => location.reload()}>Tải lại trình xem</button>
         </div>
       )}
       {hover && (
@@ -76,7 +76,7 @@ export default function ComparisonViewer({ state }: Props) {
           }}
         >
           {hover.name}
-          <span>Compared part</span>
+          <span>Linh kiện đang so sánh</span>
         </div>
       )}
     </>

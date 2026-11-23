@@ -25,9 +25,9 @@ export default function Disassembly({
   onToggleAuto,
   onSetExplode,
   onReset,
-  sectionLabel = 'Explosion control',
+  sectionLabel = 'Điều khiển tháo rời',
   title,
-  sliderLabel = 'Disassemble the specimen',
+  sliderLabel = 'Tháo rời mô hình',
   valueText,
 }: Props) {
   const phases = levels[level].phases,
@@ -44,17 +44,17 @@ export default function Disassembly({
           onClick={onToggleAuto}
           aria-label={
             playing
-              ? 'Pause automatic disassembly'
-              : 'Take it apart automatically'
+              ? 'Tạm dừng tháo rời tự động'
+              : 'Tháo rời tự động'
           }
         >
           {playing ? <Pause size={23} /> : <Play size={23} />}
-          <span>{playing ? 'Pause' : 'Auto'}</span>
+          <span>{playing ? 'Tạm dừng' : 'Tự động'}</span>
         </button>
         <div className="disassembly-label">
           <div>
-            <strong>{title ?? (logical ? 'Expand' : 'Disassemble')}</strong>
-            <span>DRAG OR PLAY</span>
+            <strong>{title ?? (logical ? 'Mở rộng' : 'Tháo rời')}</strong>
+            <span>KÉO HOẶC CHẠY</span>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function Disassembly({
             onSetExplode(Array.isArray(value) ? value[0] : value)
           }
           aria-label={sliderLabel}
-          aria-valuetext={valueText ?? `${explodePercent} percent`}
+          aria-valuetext={valueText ?? `${explodePercent} phần trăm`}
         />
         <div className="ruler" aria-hidden="true">
           {Array.from({ length: 41 }, (_, i) => (
@@ -88,11 +88,11 @@ export default function Disassembly({
         <output>{explodePercent}%</output>
         <button
           className="reset"
-          aria-label="Reset camera and assembly"
+          aria-label="Đặt lại góc nhìn và lắp ráp"
           onClick={onReset}
         >
           <RotateCcw size={18} />
-          <span>Reset</span>
+          <span>Đặt lại</span>
         </button>
       </div>
     </section>

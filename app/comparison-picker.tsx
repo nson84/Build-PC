@@ -55,12 +55,12 @@ function PickerResult({ item, selected, takenBy, onChoose }: ResultProps) {
         </span>
         <span className="comparison-result-kind">
           {takenBy
-            ? `On ${takenBy}`
+            ? `Đang ở ${takenBy}`
             : item.kind === 'logical'
-              ? 'Diagram'
-              : 'Hardware'}
+              ? 'Sơ đồ'
+              : 'Phần cứng'}
         </span>
-        {selected && <Check size={16} aria-label="Selected" />}
+        {selected && <Check size={16} aria-label="Đã chọn" />}
       </button>
     </li>
   );
@@ -123,12 +123,12 @@ export default function ComparisonPicker({
       >
         <header className="comparison-picker-heading">
           <div>
-            <DialogTitle>Choose part {sideLetter(side)}</DialogTitle>
+            <DialogTitle>Chọn linh kiện {sideLetter(side)}</DialogTitle>
             <DialogDescription>
-              Browse any system. Your other choice stays in place.
+              Duyệt mọi hệ thống. Lựa chọn ở khung còn lại vẫn được giữ nguyên.
             </DialogDescription>
           </div>
-          <button aria-label="Close part picker" onClick={onClose}>
+          <button aria-label="Đóng bộ chọn linh kiện" onClick={onClose}>
             <X size={20} />
           </button>
         </header>
@@ -137,16 +137,16 @@ export default function ComparisonPicker({
             <Search size={17} aria-hidden="true" />
             <input
               ref={search}
-              aria-label="Search parts"
-              placeholder="Search parts, models or architecture…"
+              aria-label="Tìm linh kiện"
+              placeholder="Tìm linh kiện, mẫu hoặc kiến trúc…"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
           </label>
           <label className="comparison-system-filter">
-            <span>System</span>
+            <span>Hệ thống</span>
             <select
-              aria-label="System"
+              aria-label="Hệ thống"
               value={system ?? 'all'}
               onChange={(event) =>
                 setSystem(
@@ -156,7 +156,7 @@ export default function ComparisonPicker({
                 )
               }
             >
-              <option value="all">All systems</option>
+              <option value="all">Tất cả hệ thống</option>
               {systemRoots.map((root) => (
                 <option key={root} value={root}>
                   {levels[root].name}
@@ -166,13 +166,13 @@ export default function ComparisonPicker({
           </label>
         </div>
         <div className="comparison-picker-body">
-          <nav className="comparison-category-nav" aria-label="Part categories">
+          <nav className="comparison-category-nav" aria-label="Danh mục linh kiện">
             <button
               aria-pressed={!category}
               style={hueStyle('system')}
               onClick={() => setCategory(undefined)}
             >
-              All parts <span aria-hidden="true">{matches.length}</span>
+              Tất cả <span aria-hidden="true">{matches.length}</span>
             </button>
             {comparisonCategories.map((entry) => (
               <button
@@ -189,13 +189,13 @@ export default function ComparisonPicker({
           </nav>
           <div className="comparison-results">
             <output className="comparison-result-count">
-              {results.length} {results.length === 1 ? 'part' : 'parts'}
+              {results.length} linh kiện
             </output>
             {!results.length && (
               <div className="comparison-empty">
-                <strong>No matching parts</strong>
-                <p>Try another category, system or search.</p>
-                <button onClick={clear}>Clear filters</button>
+                <strong>Không có linh kiện phù hợp</strong>
+                <p>Hãy thử danh mục, hệ thống hoặc từ khóa khác.</p>
+                <button onClick={clear}>Xóa bộ lọc</button>
               </div>
             )}
             {groups.map((group) => (

@@ -186,23 +186,23 @@ export interface PowerOption extends Option {
 export const processorOptions: Record<ProcessorChoice, ProcessorOption> = {
   ryzen: {
     name: 'AMD Ryzen 9 9950X',
-    summary: '16 cores · AM5',
+    summary: '16 nhân · AM5',
     socket: 'AM5',
     // AMD publishes only the 170 W default TDP, a cooling figure. The socket
     // power limit is the like-for-like number to Intel's maximum turbo power,
     // and comes from an independent review.
     watts: 200,
-    wattsLabel: 'socket power limit (PPT)',
+    wattsLabel: 'giới hạn công suất socket (PPT)',
     memorySpeed: { 2: 5600, 4: 3600 },
     brand: 'amd',
     sources: ['ryzen', 'fpsreview9950x'],
   },
   corei9: {
     name: 'Intel Core Ultra 9 285K',
-    summary: '24 cores · LGA 1851',
+    summary: '24 nhân · LGA 1851',
     socket: 'LGA 1851',
     watts: 250,
-    wattsLabel: 'maximum turbo power',
+    wattsLabel: 'công suất turbo tối đa',
     memorySpeed: { 2: 6400 },
     brand: 'intel',
     sources: ['corei9'],
@@ -218,14 +218,14 @@ export const radiator360: Radiator = { length: 394, thickness: 27, fans: 3 };
  */
 export const coolerOptions: Record<CoolerChoice, CoolerOption> = {
   cooler: {
-    name: 'Tower air cooler',
-    summary: '4 heat pipes · 120 mm fin stack',
+    name: 'Tản nhiệt khí tháp',
+    summary: '4 ống đồng · cụm lá tản 120 mm',
     height: 150,
     sources: ['aircooler'],
   },
   liquid: {
-    name: '360 mm liquid cooler',
-    summary: 'Pump block · front radiator',
+    name: 'Tản nhiệt nước AIO 360 mm',
+    summary: 'Khối bơm · két tản trước',
     radiator: radiator360,
     sources: ['aio'],
   },
@@ -318,7 +318,7 @@ export const memoryOptions: Record<MemoryChoice, MemoryOption> = {
   // The same module, twice over: every slot on the board filled.
   dimm4: {
     name: 'Kingston FURY Beast DDR5-6000 × 4',
-    summary: '4 × 16 GB · every slot filled',
+    summary: '4 × 16 GB · gắn kín mọi khe',
     generation: 'DDR5',
     modules: 4,
     speed: 6000,
@@ -402,14 +402,14 @@ export const graphicsOptions: Record<GraphicsChoice, GraphicsOption> = {
 /** The drives are representative models of the two families, not products. */
 export const storageOptions: Record<StorageChoice, StorageOption> = {
   nvmesata: {
-    name: 'M.2 NVMe + 2.5-inch SATA SSD',
-    summary: 'Two drives · one SATA cable',
+    name: 'SSD M.2 NVMe + SATA 2.5 inch',
+    summary: 'Hai ổ cứng · một cáp SATA',
     sata: true,
     sources: ['samsungnvme', 'samsungsata'],
   },
   nvme: {
-    name: 'M.2 NVMe SSD only',
-    summary: 'One drive · no cables',
+    name: 'Chỉ dùng SSD M.2 NVMe',
+    summary: 'Một ổ cứng · không cần dây',
     sata: false,
     sources: ['samsungnvme'],
   },
@@ -419,7 +419,7 @@ export const storageOptions: Record<StorageChoice, StorageOption> = {
 export const powerOptions: Record<PowerChoice, PowerOption> = {
   psu650: {
     name: 'ASUS TUF Gaming 650W Bronze',
-    summary: '650 W · fixed cables',
+    summary: '650 W · cáp liền',
     watts: 650,
     modular: false,
     sixteenPin: false,
@@ -429,7 +429,7 @@ export const powerOptions: Record<PowerChoice, PowerOption> = {
   },
   psubronze: {
     name: 'ASUS TUF Gaming 750W Bronze',
-    summary: '750 W · fixed cables',
+    summary: '750 W · cáp liền',
     watts: 750,
     modular: false,
     sixteenPin: false,
@@ -439,7 +439,7 @@ export const powerOptions: Record<PowerChoice, PowerOption> = {
   },
   psu: {
     name: 'ASUS TUF Gaming 850W Gold',
-    summary: '850 W · modular',
+    summary: '850 W · cáp rời (modular)',
     watts: 850,
     modular: true,
     sixteenPin: true,
@@ -449,7 +449,7 @@ export const powerOptions: Record<PowerChoice, PowerOption> = {
   },
   psu1000: {
     name: 'ASUS TUF Gaming 1000W Gold',
-    summary: '1000 W · modular',
+    summary: '1000 W · cáp rời (modular)',
     watts: 1000,
     modular: true,
     sixteenPin: true,
@@ -459,7 +459,7 @@ export const powerOptions: Record<PowerChoice, PowerOption> = {
   },
   psu1200: {
     name: 'ASUS TUF Gaming 1200W Gold',
-    summary: '1200 W · modular · two 16-pin',
+    summary: '1200 W · cáp rời · hai đầu 16-pin',
     watts: 1200,
     modular: true,
     sixteenPin: true,
@@ -471,13 +471,13 @@ export const powerOptions: Record<PowerChoice, PowerOption> = {
 
 /** The slots, in the order a builder chooses them. */
 export const slots: { id: BuildSlot; label: string }[] = [
-  { id: 'processor', label: 'Processor' },
-  { id: 'cooler', label: 'CPU cooler' },
-  { id: 'board', label: 'Motherboard' },
-  { id: 'memory', label: 'Memory' },
-  { id: 'storage', label: 'Storage' },
-  { id: 'graphics', label: 'Graphics card' },
-  { id: 'power', label: 'Power supply' },
+  { id: 'processor', label: 'Vi xử lý (CPU)' },
+  { id: 'cooler', label: 'Tản nhiệt CPU' },
+  { id: 'board', label: 'Bo mạch chủ' },
+  { id: 'memory', label: 'Bộ nhớ (RAM)' },
+  { id: 'storage', label: 'Lưu trữ' },
+  { id: 'graphics', label: 'Card đồ họa' },
+  { id: 'power', label: 'Bộ nguồn (PSU)' },
 ];
 
 export type AnyOption = Option & { id: string };
@@ -625,6 +625,6 @@ export function graphicsFeed(build: DesktopBuild) {
   const gpu = graphicsOptions[build.graphics];
   return {
     label: gpu.connector === '8-pin' ? '8-pin PCIe' : '12V-2x6',
-    description: `The installed ${gpu.name} has a direct auxiliary feed from the PSU as well as slot power. Regulators on the card produce lower voltages for the GPU and memory.`,
+    description: `Card ${gpu.name} đang lắp có đường nguồn phụ trực tiếp từ PSU bên cạnh nguồn qua khe cắm. Mạch ổn áp trên card tạo ra điện áp thấp hơn cho GPU và bộ nhớ.`,
   };
 }

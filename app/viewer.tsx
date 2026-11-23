@@ -51,17 +51,17 @@ export default function Viewer({
       labels: setLabels,
       error: reportError,
     }),
-    'The 3D viewer could not load. Reload to try again.',
+    'Không thể tải trình xem 3D. Vui lòng tải lại trang để thử lại.',
   );
   return (
     <>
       <div
         ref={host}
         className="viewport"
-        aria-label="Interactive 3D computer model"
+        aria-label="Mô hình máy tính 3D tương tác"
       >
         {labels.length > 0 && (
-          <ul className="part-labels" aria-label="Parts on the tray">
+          <ul className="part-labels" aria-label="Các linh kiện trên khay">
             {labels.map((label) => (
               <li
                 key={label.concept}
@@ -88,16 +88,16 @@ export default function Viewer({
           rather than being drawn underneath it. */}
       {loading && !error && (
         <div className="empty-scene loading">
-          <h3>Loading components for you…</h3>
+          <h3>Đang tải các linh kiện…</h3>
         </div>
       )}
       {!ready && !error && (
-        <output className="viewer-status sr-only">Loading…</output>
+        <output className="viewer-status sr-only">Đang tải…</output>
       )}
       {error && (
         <div className="viewer-status error" role="alert">
           {error}
-          <button onClick={() => location.reload()}>Reload viewer</button>
+          <button onClick={() => location.reload()}>Tải lại trình xem</button>
         </div>
       )}
       {hover && (
@@ -113,8 +113,8 @@ export default function Viewer({
           <span>
             {hoverHint ??
               (hover.opens
-                ? 'Left-click to open · right-click to inspect'
-                : 'Click to inspect')}
+                ? 'Nhấp trái để mở · nhấp phải để kiểm tra'
+                : 'Nhấp để kiểm tra')}
           </span>
         </div>
       )}

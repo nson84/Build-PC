@@ -32,11 +32,11 @@ type Status = 'idle' | 'sending' | Outcome;
 
 const PROBLEMS: Partial<Record<Status, string>> = {
   invalid:
-    'Something in the form could not be accepted. Check the message is between 10 and 5000 characters and the email address is complete.',
+    'Thông tin biểu mẫu chưa hợp lệ. Hãy kiểm tra nội dung từ 10 đến 5000 ký tự và địa chỉ email đầy đủ.',
   rate_limited:
-    'That is a lot of messages in a short time. Please wait a few minutes and try again.',
+    'Bạn đã gửi quá nhiều tin nhắn trong thời gian ngắn. Vui lòng đợi vài phút rồi thử lại.',
   failed:
-    'The message could not be sent. Check your connection and try again; what you wrote is still here.',
+    'Không thể gửi tin nhắn. Hãy kiểm tra kết nối mạng và thử lại; nội dung bạn viết vẫn được giữ nguyên.',
 };
 
 /**
@@ -81,31 +81,31 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
   return (
     <Dialog open={open} onOpenChange={change} modal>
       <DialogContent className="about-dialog feedback-dialog">
-        <DialogTitle>Send feedback</DialogTitle>
+        <DialogTitle>Gửi góp ý</DialogTitle>
         <DialogDescription>
-          Spotted a mistake, have an idea, or want to work together on PC
-          Anatomy? Tell me here.
+          Phát hiện sai sót, có ý tưởng mới, hoặc muốn hợp tác cùng PC Anatomy?
+          Hãy nhắn cho mình tại đây.
         </DialogDescription>
         {status === 'sent' ? (
           <div className="feedback-done">
             <output>
-              Thank you, your message was sent.
-              {replyTo && ' I will reply to the address you gave.'}
+              Cảm ơn bạn, tin nhắn đã được gửi.
+              {replyTo && ' Mình sẽ phản hồi qua địa chỉ email bạn đã cung cấp.'}
             </output>
             <button
               type="button"
               className="feedback-submit"
               onClick={() => setStatus('idle')}
             >
-              Send another
+              Gửi tin nhắn khác
             </button>
           </div>
         ) : status === 'unavailable' ? (
           <div className="feedback-done" role="alert">
             <p>
-              The feedback form is not available on this copy of the site. You
-              can open an issue on GitHub instead; what you wrote is kept here
-              so you can copy it across.
+              Biểu mẫu góp ý hiện không khả dụng trên bản chạy này. Bạn có thể
+              mở issue trên GitHub; nội dung bạn viết vẫn được giữ lại để sao
+              chép.
             </p>
             <a
               className="feedback-submit"
@@ -113,7 +113,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               target="_blank"
               rel="noreferrer"
             >
-              Open a GitHub issue
+              Mở issue trên GitHub
               <ArrowUpRight size={15} />
             </a>
             <button
@@ -121,13 +121,13 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               className="feedback-back"
               onClick={() => setStatus('idle')}
             >
-              Back to the form
+              Quay lại biểu mẫu
             </button>
           </div>
         ) : (
           <form className="feedback-form" onSubmit={submit}>
             <fieldset className="feedback-kinds">
-              <legend>What is it about?</legend>
+              <legend>Nội dung về vấn đề gì?</legend>
               {KINDS.map((kind) => (
                 <label key={kind}>
                   <input
@@ -144,7 +144,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
             <div className="feedback-row">
               <label>
                 <span>
-                  Name <small>optional</small>
+                  Tên <small>không bắt buộc</small>
                 </span>
                 <input
                   name="name"
@@ -156,7 +156,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               </label>
               <label>
                 <span>
-                  Email <small>optional, so I can reply</small>
+                  Email <small>không bắt buộc, để nhận phản hồi</small>
                 </span>
                 <input
                   name="email"
@@ -170,7 +170,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
             </div>
             <div className="feedback-message">
               <label>
-                <span>Message</span>
+                <span>Nội dung</span>
                 <textarea
                   name="message"
                   value={draft.message}
@@ -184,7 +184,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               </label>
               <small id="feedback-count" className="feedback-count">
                 {length < LIMITS.messageMin
-                  ? `At least ${LIMITS.messageMin} characters`
+                  ? `Tối thiểu ${LIMITS.messageMin} ký tự`
                   : `${length} / ${LIMITS.messageMax}`}
               </small>
             </div>
@@ -203,9 +203,9 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               </label>
             </div>
             <p className="feedback-note">
-              The address of this page, what you have selected and the interface
-              language are sent along with your message. Your message is emailed
-              to the PC Anatomy maintainer and only used to reply to you.
+              Địa chỉ trang hiện tại, linh kiện bạn đang chọn và ngôn ngữ giao
+              diện sẽ được gửi kèm tin nhắn. Tin nhắn được gửi qua email tới
+              người duy trì PC Anatomy và chỉ dùng để phản hồi cho bạn.
             </p>
             {problem && (
               <p className="feedback-error" role="alert">
@@ -222,7 +222,7 @@ export default function FeedbackDialog({ open, onOpenChange, context }: Props) {
               ) : (
                 <Send size={15} />
               )}
-              {status === 'sending' ? 'Sending…' : 'Send'}
+              {status === 'sending' ? 'Đang gửi…' : 'Gửi'}
             </button>
           </form>
         )}

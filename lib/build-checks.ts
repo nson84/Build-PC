@@ -80,13 +80,13 @@ function socketCheck(cpu: ProcessorOption, board: BoardOption) {
   return socketFits(cpu, board)
     ? result(
         'ok',
-        'Processor fits the socket',
-        `The ${cpu.name} is an ${cpu.socket} processor, and the ${board.name} has an ${board.socket} socket.`,
+        'CPU khớp socket bo mạch chủ',
+        `${cpu.name} dùng socket ${cpu.socket}, và ${board.name} có socket ${board.socket}.`,
       )
     : result(
         'fail',
-        'Processor does not fit the socket',
-        `The ${cpu.name} needs an ${cpu.socket} socket. The ${board.name} has ${board.socket}, so the processor stays in its box and the socket keeps its cover.`,
+        'CPU không khớp socket bo mạch chủ',
+        `${cpu.name} cần socket ${cpu.socket}. ${board.name} dùng socket ${board.socket}, nên CPU không thể lắp vào và socket vẫn đóng nắp bảo vệ.`,
       );
 }
 
@@ -101,15 +101,15 @@ export function coolerCheck(cooler: CoolerOption) {
   const { radiator, height } = cooler;
   if (radiator) {
     const fits = radiator.fans <= caseRoom.frontFans;
-    const detail = `The ${radiator.length} mm radiator takes ${radiator.fans} 120 mm fans. The case has ${caseRoom.frontFans} behind the front panel, and ${caseRoom.roof} mm between the board and the roof, too little for a radiator and its fans.`;
+    const detail = `Két tản nhiệt ${radiator.length} mm cần ${radiator.fans} quạt 120 mm. Vỏ máy có ${caseRoom.frontFans} vị trí quạt ở mặt trước và chỉ ${caseRoom.roof} mm khoảng trống phía trên bo mạch chủ, không đủ chỗ cho két tản nhiệt và quạt ở nóc.`;
     return fits
-      ? result('ok', 'Radiator fits the front of the case', detail)
-      : result('fail', 'Radiator is too long for the case', detail);
+      ? result('ok', 'Két tản nhiệt lắp vừa mặt trước vỏ máy', detail)
+      : result('fail', 'Két tản nhiệt quá dài so với vỏ máy', detail);
   }
-  const detail = `The tower stands ${height} mm off the board, and the case has about ${caseRoom.coolerHeight} mm to the side glass.`;
+  const detail = `Tháp tản nhiệt cao ${height} mm tính từ mặt bo mạch, trong khi vỏ máy có khoảng ${caseRoom.coolerHeight} mm tới mặt kính hông.`;
   return (height ?? 0) <= caseRoom.coolerHeight
-    ? result('ok', 'Cooler fits under the side panel', detail)
-    : result('fail', 'Cooler is too tall for the case', detail);
+    ? result('ok', 'Tản nhiệt lắp vừa dưới mặt kính hông', detail)
+    : result('fail', 'Tản nhiệt quá cao so với vỏ máy', detail);
 }
 
 /**
@@ -122,19 +122,18 @@ export function boardCheck(
 ) {
   const result = checkOf('board', board.sources);
   const [height, depth] = board.size;
-  const article = board.formFactor === 'ATX' ? 'an' : 'a';
-  const detail = `The ${board.name} is ${article} ${board.formFactor} board, ${height} × ${depth} mm, and the case has standoffs for ${caseRoom.boards.join(' and ')} boards.`;
+  const detail = `${board.name} là bo mạch chuẩn ${board.formFactor}, kích thước ${height} × ${depth} mm, và vỏ máy có sẵn ốc đệm cho chuẩn ${caseRoom.boards.join(' và ')}.`;
   return (caseRoom.boards as readonly string[]).includes(board.formFactor)
-    ? result('ok', 'Board fits the case', detail)
-    : result('fail', 'Board does not fit the case', detail);
+    ? result('ok', 'Bo mạch chủ lắp vừa vỏ máy', detail)
+    : result('fail', 'Bo mạch chủ không vừa vỏ máy', detail);
 }
 
 function memoryCheck(ram: MemoryOption, board: BoardOption) {
   if (memoryFits(ram, board))
     return checkOf('memory', [...ram.sources, ...board.sources])(
       'ok',
-      'Memory fits the slots',
-      `${plural(ram.modules, `${ram.generation} module`)} in the board’s four ${board.memory} slots.`,
+      'RAM khớp với khe cắm',
+      `${ram.modules} thanh ${ram.generation} lắp vào bốn khe ${board.memory} của bo mạch chủ.`,
     );
   // The failure rests on the key positions, which the module's own sources
   // do not describe.
@@ -144,8 +143,8 @@ function memoryCheck(ram: MemoryOption, board: BoardOption) {
     ...board.sources,
   ])(
     'fail',
-    'Memory does not fit the slots',
-    `The key notch of a ${ram.generation} module is in a different place from a ${board.memory} slot’s, so it cannot be pushed in. The slots stay empty.`,
+    'RAM không khớp khe cắm',
+    `Rãnh định vị của thanh ${ram.generation} nằm ở vị trí khác so với khe ${board.memory}, nên không thể cắm vào. Các khe RAM vẫn để trống.`,
   );
 }
 
@@ -160,22 +159,22 @@ function speedCheck(cpu: ProcessorOption, ram: MemoryOption) {
   const result = checkOf('speed', [...cpu.sources, ...ram.sources]);
   const maker = cpu.brand === 'amd' ? 'AMD' : 'Intel';
   const rated = cpu.memorySpeed[ram.modules];
-  const profile = `The kit reaches DDR5-${ram.speed} through its XMP or EXPO profile, which runs it past the processor’s rating.`;
+  const profile = `Bộ kit đạt DDR5-${ram.speed} thông qua hồ sơ XMP hoặc EXPO, vượt mức xung mặc định công bố của CPU.`;
   if (rated === undefined)
     return result(
       'ok',
-      'Memory speed is within the published rating',
-      `${maker} rates the ${cpu.name} for up to DDR5-${cpu.memorySpeed[2]} and publishes no separate figure for ${ram.modules} modules. ${profile}`,
+      'Tốc độ RAM nằm trong mức hỗ trợ công bố',
+      `${maker} công bố ${cpu.name} hỗ trợ tối đa DDR5-${cpu.memorySpeed[2]} và không công bố thông số riêng cho ${ram.modules} thanh. ${profile}`,
     );
   const four = cpu.memorySpeed[4];
-  const detail = `${maker} rates the ${cpu.name} at DDR5-${cpu.memorySpeed[2]} with two single-rank modules${four ? ` and DDR5-${four} with four` : ''}. ${profile}`;
+  const detail = `${maker} công bố ${cpu.name} chạy ở DDR5-${cpu.memorySpeed[2]} với 2 thanh single-rank${four ? ` và DDR5-${four} với 4 thanh` : ''}. ${profile}`;
   return ram.modules === 4 && rated < cpu.memorySpeed[2]
     ? result(
         'warn',
-        'Four modules run slower',
-        `${detail} With every slot filled that profile is unlikely to hold, so expect the memory to run nearer DDR5-${rated}.`,
+        'Chạy 4 thanh RAM sẽ giảm tốc độ',
+        `${detail} Khi cắm kín cả 4 khe, hồ sơ ép xung khó giữ ổn định nên RAM thường chạy quanh mức DDR5-${rated}.`,
       )
-    : result('ok', 'Memory speed is within reach', detail);
+    : result('ok', 'Tốc độ RAM trong ngưỡng hỗ trợ', detail);
 }
 
 /** Exported so the tests can try a card longer than any on offer. */
@@ -190,68 +189,69 @@ export function lengthCheck(
     ...(cooler.radiator ? cooler.sources : []),
   ]);
   const radiator = cooler.radiator
-    ? ` With the radiator inside the front fans, that is ${caseRoom.cardLength} mm less its ${cooler.radiator.thickness} mm.`
+    ? ` Khi gắn két tản nhiệt nước phía sau quạt trước, khoảng trống ${caseRoom.cardLength} mm bị trừ đi ${cooler.radiator.thickness} mm độ dày két.`
     : '';
   return gpu.length <= room
     ? result(
         'ok',
-        'Card fits the case',
-        `${gpu.length} mm long, and the case takes cards up to about ${room} mm.${radiator}`,
+        'Card đồ họa lắp vừa vỏ máy',
+        `Dài ${gpu.length} mm, trong khi vỏ máy hỗ trợ card dài tới khoảng ${room} mm.${radiator}`,
       )
     : result(
         'fail',
-        'Card is too long for the case',
-        `${gpu.length} mm long, but the case only takes about ${room} mm.${radiator}`,
+        'Card đồ họa quá dài so với vỏ máy',
+        `Dài ${gpu.length} mm, nhưng vỏ máy chỉ hỗ trợ tối đa khoảng ${room} mm.${radiator}`,
       );
 }
 
 function supplyCheck(gpu: GraphicsOption, psu: PowerOption) {
   const result = checkOf('supply', [...gpu.sources, ...psu.sources]);
-  const detail = `${gpu.psuSource} gives ${gpu.psu} W as the ${gpu.psuKind} supply for the ${gpu.name}. The ${psu.name} is rated ${psu.watts} W.`;
+  const kindLabel = gpu.psuKind === 'minimum' ? 'tối thiểu' : 'khuyến nghị';
+  const detail = `${gpu.psuSource} công bố mức nguồn ${kindLabel} ${gpu.psu} W cho ${gpu.name}. Bộ nguồn ${psu.name} có công suất danh định ${psu.watts} W.`;
   if (psu.watts >= gpu.psu)
-    return result('ok', 'Supply meets the card maker’s figure', detail);
+    return result('ok', 'Công suất nguồn đáp ứng mức hãng card yêu cầu', detail);
   return gpu.psuKind === 'minimum'
-    ? result('fail', 'Supply is below the card’s minimum', detail)
-    : result('warn', 'Supply is below the card maker’s recommendation', detail);
+    ? result('fail', 'Công suất nguồn thấp hơn mức tối thiểu của card', detail)
+    : result('warn', 'Công suất nguồn thấp hơn mức khuyến nghị của hãng card', detail);
 }
 
 function connectorCheck(gpu: GraphicsOption, psu: PowerOption) {
   const result = checkOf('connector', [...gpu.sources, ...psu.sources]);
-  const leads = plural(psu.eightPin, '8-pin PCIe lead');
+  const leads = `${psu.eightPin} đầu cấp nguồn PCIe 8-pin`;
   if (gpu.connector === '8-pin')
     return psu.eightPin >= 1
       ? result(
           'ok',
-          'Power cable matches the card',
-          `The card takes one 8-pin PCIe lead, and the ${psu.name} has ${leads}.`,
+          'Dây nguồn khớp với card đồ họa',
+          `Card dùng 1 đầu cấp nguồn PCIe 8-pin và ${psu.name} có ${leads}.`,
         )
       : result(
           'fail',
-          'No lead for the card',
-          `The card takes an 8-pin PCIe lead, and the ${psu.name} has none.`,
+          'Không có đầu dây cấp nguồn cho card',
+          `Card cần 1 đầu PCIe 8-pin nhưng ${psu.name} không có.`,
         );
   if (psu.sixteenPin)
     return result(
       'ok',
-      'Power cable matches the card',
-      `The card takes a 16-pin 12V-2x6 lead, which the ${psu.name} has.`,
+      'Dây nguồn khớp với card đồ họa',
+      `Card dùng đầu 16-pin 12V-2x6 và ${psu.name} có sẵn dây này.`,
     );
   if (!gpu.adapter)
     return result(
       'warn',
-      'No 16-pin lead for the card',
-      `The ${psu.name} has only 8-pin PCIe leads, and the card has a 16-pin 12V-2x6 socket. It needs a 12V-2x6 cable or an adapter.`,
+      'Nguồn không có dây 16-pin cho card',
+      `${psu.name} chỉ có dây PCIe 8-pin, trong khi card dùng cổng 16-pin 12V-2x6. Cần dây 12V-2x6 hoặc đầu chuyển đổi.`,
     );
   return psu.eightPin >= gpu.adapter.leads
     ? result(
         'warn',
-        'Card needs its adapter',
-        `The ${psu.name} has no 16-pin 12V-2x6 lead. The card comes with a ${gpu.adapter.name} adapter, and the supply has ${leads} to fill it.`,
+        'Card cần dùng cáp chuyển đổi đi kèm',
+        `${psu.name} không có dây 16-pin 12V-2x6. Card đi kèm cáp chuyển ${gpu.adapter.name} và bộ nguồn có ${leads} để cắm đủ.`,
       )
     : result(
         'fail',
-        'Not enough leads for the card’s adapter',
-        `The ${psu.name} has no 16-pin 12V-2x6 lead, and the card’s ${gpu.adapter.name} adapter needs ${gpu.adapter.leads} leads where the supply has ${psu.eightPin}.`,
+        'Không đủ dây 8-pin cho cáp chuyển của card',
+        `${psu.name} không có dây 16-pin 12V-2x6, và cáp chuyển ${gpu.adapter.name} của card cần ${gpu.adapter.leads} đầu nhưng nguồn chỉ có ${psu.eightPin}.`,
       );
 }
 
@@ -265,12 +265,12 @@ function storageCheck(
   board: BoardOption,
 ) {
   const m2 =
-    'The M.2 drive sits in the board’s M.2 slot and takes its power through it.';
+    'Ổ M.2 gắn vào khe M.2 trên bo mạch chủ và lấy điện trực tiếp qua khe này.';
   if (!drives.sata)
     return checkOf('storage', [...drives.sources, ...board.sources])(
       'ok',
-      'Drive fits the board',
-      `${m2} The build needs no drive cables.`,
+      'Ổ cứng khớp với bo mạch chủ',
+      `${m2} Cấu hình này không cần dây cáp ổ cứng.`,
     );
   const result = checkOf('storage', [
     ...drives.sources,
@@ -280,13 +280,13 @@ function storageCheck(
   return psu.sata >= 1
     ? result(
         'ok',
-        'Both drives are connected',
-        `${m2} The SATA SSD takes a data cable to one of the board’s SATA ports and a power lead from the ${psu.name}, which has ${plural(psu.sata, 'SATA power connector')}.`,
+        'Cả hai ổ cứng đều được kết nối',
+        `${m2} Ổ SSD SATA nối cáp dữ liệu tới cổng SATA trên bo mạch và nhận dây nguồn từ ${psu.name} (có ${psu.sata} đầu nguồn SATA).`,
       )
     : result(
         'fail',
-        'No power lead for the SATA drive',
-        `${m2} The SATA SSD needs a SATA power lead, and the ${psu.name} has none.`,
+        'Thiếu dây nguồn cho ổ SATA',
+        `${m2} Ổ SSD SATA cần đầu nguồn SATA nhưng ${psu.name} không có.`,
       );
 }
 
@@ -306,13 +306,13 @@ function budgetCheck(
   // supply would carry them when the processor cannot go into this board.
   const unseated = socketFits(cpu, board)
     ? ''
-    : ` The ${cpu.name} is counted as chosen, though it does not fit this board.`;
-  const detail = `${cpu.watts} W (${cpu.wattsLabel}) plus ${gpu.watts} W for the card is ${draw} W, against ${psu.watts} W. Memory, drives, fans and short peaks add more on top.${unseated}`;
+    : ` Vẫn tính mức tiêu thụ của ${cpu.name} dù CPU này không lắp vừa bo mạch đã chọn.`;
+  const detail = `${cpu.watts} W (${cpu.wattsLabel}) cộng với ${gpu.watts} W của card là ${draw} W, so với công suất nguồn ${psu.watts} W. RAM, ổ cứng, quạt và các đỉnh tải ngắn sẽ cộng thêm vào mức này.${unseated}`;
   return draw <= psu.watts
-    ? result('ok', 'Processor and card are within the supply’s rating', detail)
+    ? result('ok', 'Tổng công suất CPU và GPU nằm trong ngưỡng của nguồn', detail)
     : result(
         'fail',
-        'Processor and card add up to more than the supply',
+        'Tổng công suất CPU và GPU vượt quá công suất nguồn',
         detail,
       );
 }

@@ -43,7 +43,7 @@ export default function Topbar({
 }: Props) {
   return (
     <header className="topbar">
-      <button className="brand" onClick={onReset} aria-label="Reset PC Anatomy">
+      <button className="brand" onClick={onReset} aria-label="Đặt lại PC Anatomy">
         <span className="brand-icon">
           <Cpu size={21} />
         </span>
@@ -54,11 +54,11 @@ export default function Topbar({
         href={REPOSITORY}
         target="_blank"
         rel="noreferrer"
-        title="PC Anatomy on GitHub"
+        title="PC Anatomy trên GitHub"
       >
         <GitHubMark size={13} />
         <span className="byline-text">
-          <span className="byline-prefix">Created by </span>
+          <span className="byline-prefix">Tạo bởi </span>
           <strong>Yoseph</strong>
         </span>
       </a>
@@ -69,47 +69,47 @@ export default function Topbar({
         <button
           className="chip chip-accent feedback-button"
           onClick={onFeedback}
-          title="Report a mistake, suggest an idea or get in touch about working together"
+          title="Báo lỗi, góp ý hoặc liên hệ hợp tác"
         >
           <MessageSquare size={15} />
           {/* One of the two is hidden at a time, so the button's name is
               always the label that is showing. */}
-          <span className="label-full">Feedback / Idea / Collaboration</span>
-          <span className="label-short">Feedback</span>
+          <span className="label-full">Góp ý / Ý tưởng / Hợp tác</span>
+          <span className="label-short">Góp ý</span>
         </button>
         <a
           className="chip guide-link"
           href={GUIDE}
-          title="Learn about PC components"
+          title="Tìm hiểu về các linh kiện PC"
         >
           <BookOpen size={15} />
-          <span>Guide</span>
+          <span>Hướng dẫn</span>
         </a>
         <button
           className="mobile-layers"
           onClick={onToggleLayers}
-          aria-label="Toggle systems"
+          aria-label="Bật/tắt danh sách hệ thống"
           aria-expanded={layers}
         >
           <Layers3 size={19} />
         </button>
         <button
           className="search-button"
-          aria-label="Find a component"
+          aria-label="Tìm linh kiện"
           onClick={onSearch}
         >
           <Search size={16} />
-          <span>Search components</span>
+          <span>Tìm linh kiện</span>
           <kbd>/</kbd>
         </button>
         <button
           className="chip info-button"
-          aria-label="About and sources"
-          title="About and credits"
+          aria-label="Giới thiệu và nguồn tham khảo"
+          title="Giới thiệu và nguồn"
           onClick={onAbout}
         >
           <Info size={16} />
-          <span>About</span>
+          <span>Giới thiệu</span>
         </button>
       </div>
     </header>

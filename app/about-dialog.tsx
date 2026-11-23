@@ -15,38 +15,40 @@ export default function AboutDialog({ open, onOpenChange }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent className="about-dialog">
-        <DialogTitle>From the case down to a compute core.</DialogTitle>
+        <DialogTitle>Từ vỏ máy đến từng nhân xử lý.</DialogTitle>
         <DialogDescription>
-          PC Anatomy is a free, interactive 3D computer hardware explorer. Learn
-          how a desktop PC works by inspecting and disassembling its components.
+          PC Anatomy là trình khám phá phần cứng máy tính 3D tương tác miễn phí.
+          Tìm hiểu cách một chiếc PC để bàn hoạt động bằng cách quan sát và tháo
+          rời từng linh kiện.
         </DialogDescription>
         <p>
-          Start with an assembled ATX tower, take it apart, and keep going: into
-          the motherboard, into the graphics card, and down through the GB202
-          processor to a single streaming multiprocessor. Every scale is a
-          branch you can descend or step back out of.
+          Bắt đầu từ thùng máy ATX hoàn chỉnh, tháo rời và đi sâu hơn: vào bo
+          mạch chủ, vào card đồ họa, rồi xuống qua chip xử lý GB202 tới tận một
+          bộ đa xử lý luồng (SM). Mỗi cấp độ là một nhánh bạn có thể đi sâu vào
+          hoặc quay trở ra.
         </p>
-        <h3>Two kinds of model.</h3>
+        <h3>Hai loại mô hình.</h3>
         <p>
-          <strong>Hardware</strong> is original, approximate mechanical
-          geometry. The ATX board outline, the expansion-slot pitch and the rear
-          I/O aperture follow the published form factor. The RTX 5090, Ryzen 9
-          9950X and Core Ultra 9 285K are named subjects; everything else is a
-          representative example of its component family, not a bill of
-          materials for a particular build.
+          <strong>Phần cứng (Hardware)</strong> là hình học cơ khí gốc mang
+          tính ước lượng. Kích thước bo mạch ATX, bước khe mở rộng và khung cổng
+          I/O sau tuân theo chuẩn form factor công bố. RTX 5090, Ryzen 9 9950X
+          và Core Ultra 9 285K là các mẫu được đặt tên cụ thể; các phần còn lại
+          là đại diện tiêu biểu cho dòng linh kiện đó, không phải danh sách vật
+          tư của một bộ máy cố định.
         </p>
         <p>
-          <strong>Silicon</strong> shows documented logical architecture. Exact
-          transistor-level placement is not publicly available. A full GB202 has
-          192 SMs; the RTX 5090 enables 170. GPC interiors show a representative
-          full cluster, not an invented map of disabled units.
+          <strong>Silicon</strong> trình bày kiến trúc logic theo tài liệu công
+          bố. Vị trí bóng bán dẫn chi tiết không được công khai. Một chip GB202
+          đầy đủ có 192 SM; RTX 5090 kích hoạt 170 SM. Bên trong GPC hiển thị
+          một cụm đầy đủ mang tính đại diện, không vẽ lại các đơn vị bị vô hiệu
+          hóa.
         </p>
-        <h3>Research & credits</h3>
+        <h3>Nghiên cứu & ghi nhận</h3>
         <a className="about-source" href={GUIDE_ACCELERATION}>
-          Browser hardware acceleration setup <ArrowUpRight size={15} />
+          Cài đặt tăng tốc phần cứng trình duyệt <ArrowUpRight size={15} />
         </a>
         <a className="about-source" href={GUIDE}>
-          PC components: an illustrated beginner’s guide
+          Linh kiện PC: hướng dẫn minh họa cho người mới
           <ArrowUpRight size={15} />
         </a>
         {Object.entries(sources)
@@ -69,7 +71,7 @@ export default function AboutDialog({ open, onOpenChange }: Props) {
           target="_blank"
           rel="noreferrer"
         >
-          Interaction inspiration · Human Atlas
+          Cảm hứng tương tác · Human Atlas
           <ArrowUpRight size={15} />
         </a>
         <a
@@ -78,12 +80,12 @@ export default function AboutDialog({ open, onOpenChange }: Props) {
           target="_blank"
           rel="noreferrer"
         >
-          PC Anatomy source code
+          Mã nguồn PC Anatomy
           <ArrowUpRight size={15} />
         </a>
         <p className="about-foot">
-          No affiliation with NVIDIA, AMD or Intel. No third-party model assets.
-          Research reviewed September 2026.
+          Không liên kết với NVIDIA, AMD hay Intel. Không sử dụng tài nguyên mô
+          hình bên thứ ba. Tài liệu được rà soát tháng 9/2026.
         </p>
       </DialogContent>
     </Dialog>

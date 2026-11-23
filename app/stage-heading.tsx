@@ -19,8 +19,8 @@ type Props = {
 function hintCopy() {
   return typeof matchMedia !== 'undefined' &&
     matchMedia('(pointer: coarse)').matches
-    ? 'Tap a part to see what it is and take it apart, or press Auto.'
-    : 'Click a part to open it, right-click to inspect it, or press Auto.';
+    ? 'Chạm vào linh kiện để xem thông tin và tháo rời, hoặc nhấn Tự động.'
+    : 'Nhấp vào linh kiện để mở, nhấp chuột phải để kiểm tra, hoặc nhấn Tự động.';
 }
 
 export default function StageHeading({
@@ -39,18 +39,18 @@ export default function StageHeading({
       <div>
         <h1>
           {explode === 100
-            ? 'Component inventory'
+            ? 'Danh mục linh kiện'
             : explode > 0
               ? logical
-                ? 'Resources, separated'
-                : 'Coming apart'
+                ? 'Các khối kiến trúc đã tách'
+                : 'Đang tháo rời'
               : scale.title}
         </h1>
         {path.length > 1 && (
           <div className="stage-meta">
-            <nav className="breadcrumbs" aria-label="Component hierarchy">
+            <nav className="breadcrumbs" aria-label="Cấp độ linh kiện">
               <button
-                aria-label="Back one level"
+                aria-label="Quay lại một cấp"
                 onClick={() => onNavigate(path[path.length - 2])}
               >
                 <ArrowLeft size={14} />
@@ -79,7 +79,7 @@ export default function StageHeading({
           <p className="first-visit-hint">
             <MousePointerClick size={15} aria-hidden="true" />
             <span>{hintCopy()}</span>
-            <button aria-label="Dismiss hint" onClick={onDismissHint}>
+            <button aria-label="Đóng gợi ý" onClick={onDismissHint}>
               <X size={14} />
             </button>
           </p>

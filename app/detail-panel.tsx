@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { byId, sources, type Concept } from '@/lib/manifest';
+import { byId, categoryLabels, sources, type Concept } from '@/lib/manifest';
 import { hueOfLevel, hueOfSystem, hueStyle } from '@/lib/palette';
 import type { Selection } from '@/lib/explorer-state';
 import { levels, type LevelId } from '@/lib/levels';
@@ -70,24 +70,24 @@ export default function DetailPanel({
             <div className="detail-top">
               <span className="detail-kind">
                 <i aria-hidden="true" />
-                {selected.category} /{' '}
+                {categoryLabels[selected.category]} /{' '}
                 {selected.representationType === 'logical'
-                  ? 'ARCHITECTURE'
-                  : 'HARDWARE'}
+                  ? 'KIẾN TRÚC'
+                  : 'PHẦN CỨNG'}
               </span>
-              <button aria-label="Close component details" onClick={onClose}>
+              <button aria-label="Đóng chi tiết linh kiện" onClick={onClose}>
                 <X size={17} />
               </button>
             </div>
             <SheetTitle>{selected.name}</SheetTitle>
             <div className="instance-label">
               {selection?.instance !== undefined
-                ? 'INSTANCE ' + String(selection.instance + 1).padStart(2, '0')
-                : 'COMPONENT GROUP'}
+                ? 'PHẦN TỬ ' + String(selection.instance + 1).padStart(2, '0')
+                : 'NHÓM LINH KIỆN'}
             </div>
             <SheetDescription>{selected.description}</SheetDescription>
             <div className="purpose">
-              <h3>What it does</h3>
+              <h3>Chức năng</h3>
               <p>{selected.purpose}</p>
             </div>
             <div className="quantity">{selected.quantity}</div>
@@ -101,7 +101,7 @@ export default function DetailPanel({
             </dl>
             {selected.parent && (
               <div className="parent-link">
-                Part of{' '}
+                Thuộc{' '}
                 <button onClick={() => onSelectConcept(selected.parent!)}>
                   {byId[selected.parent].shortName}
                   <ChevronRight size={12} />
@@ -114,31 +114,32 @@ export default function DetailPanel({
                 style={hueStyle(hueOfLevel(opens))}
                 onClick={() => onDive(piece!)}
               >
-                Take apart {levels[opens].name}
+                Tháo rời {levels[opens].name}
                 <ChevronRight size={17} />
               </button>
             )}
             <div className="detail-actions">
               <button onClick={onIsolate}>
                 <Focus size={14} />
-                {isolated ? 'Show context' : 'Isolate'}
+                {isolated ? 'Hiện ngữ cảnh' : 'Cô lập'}
               </button>
               <button onClick={onFocus}>
                 <Maximize size={14} />
-                Focus
+                Lấy nét
               </button>
               <button onClick={() => onHide(piece!)}>
                 <EyeOff size={14} />
-                Hide
+                Ẩn
               </button>
             </div>
             <p className="accuracy">{selected.physicalAccuracy}</p>
             {selected.sources.length > 0 && (
               <div className="source-links">
-                <h3>References & architecture</h3>
+                <h3>Tài liệu tham khảo & kiến trúc</h3>
                 <p>
-                  Manufacturer documents and standards explain this component
-                  family. Illustrative geometry is not a product schematic.
+                  Tài liệu từ nhà sản xuất và chuẩn kỹ thuật giải thích dòng
+                  linh kiện này. Hình học minh họa không phải sơ đồ mạch sản
+                  phẩm.
                 </p>
                 {selected.sources.map((s) => (
                   <a

@@ -30,7 +30,7 @@ type Pair = readonly [ComparisonItem, ComparisonItem];
 const letters = ['A', 'B'] as const;
 
 function SpecValue({ value }: { value: string | null }) {
-  return value ?? <span className="spec-unlisted">Not listed</span>;
+  return value ?? <span className="spec-unlisted">Không công bố</span>;
 }
 
 /** Like parts: one row per field label, gaps left visible. */
@@ -42,7 +42,7 @@ function SpecTable({ pair }: { pair: Pair }) {
       <table className="comparison-specs-grid">
         <thead>
           <tr className="spec-row spec-head">
-            <th scope="col">Specification</th>
+            <th scope="col">Thông số</th>
             <th scope="col">A · {left.shortName}</th>
             <th scope="col">B · {right.shortName}</th>
           </tr>
@@ -72,7 +72,7 @@ function SpecTable({ pair }: { pair: Pair }) {
       </table>
       {!rows.length && (
         <p className="comparison-specs-note">
-          No specifications listed for these models.
+          Chưa có thông số cho các mẫu này.
         </p>
       )}
     </>
@@ -90,7 +90,7 @@ function SpecCards({ pair }: { pair: Pair }) {
           </h3>
           <p>
             {levels[item.system].name} ·{' '}
-            {item.kind === 'physical' ? 'Hardware' : 'Architecture diagram'}
+            {item.kind === 'physical' ? 'Phần cứng' : 'Sơ đồ kiến trúc'}
           </p>
           <dl>
             {item.specs.map((spec) => (
@@ -101,7 +101,7 @@ function SpecCards({ pair }: { pair: Pair }) {
             ))}
           </dl>
           {!item.specs.length && (
-            <p>No specifications listed for this model.</p>
+            <p>Chưa có thông số cho mẫu này.</p>
           )}
         </section>
       ))}
@@ -158,16 +158,16 @@ export default function ComparisonSpecs({
       >
         <div className="comparison-specs-heading">
           <div>
-            <SheetTitle>Specification comparison</SheetTitle>
+            <SheetTitle>So sánh thông số kỹ thuật</SheetTitle>
             <SheetDescription>
               {aligned
-                ? 'Matching fields are aligned. Not listed means the catalogue has no value for that model.'
-                : 'Different kinds of parts, with each model’s own specifications.'}
+                ? 'Các trường giống nhau được căn thẳng hàng. "Không công bố" nghĩa là danh mục chưa có dữ liệu cho mẫu đó.'
+                : 'Hai loại linh kiện khác nhau, hiển thị thông số riêng của từng mẫu.'}
             </SheetDescription>
           </div>
           <button
             ref={closeButton}
-            aria-label="Close specification comparison"
+            aria-label="Đóng bảng so sánh thông số"
             onClick={() => onOpenChange(false)}
           >
             <X size={18} />

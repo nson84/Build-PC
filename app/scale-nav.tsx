@@ -115,22 +115,22 @@ const levelIcon: Record<LevelId, typeof Box> = {
 
 /** What a menu's dropdowns are, where each is a product of its own. */
 const dropdowns: Record<string, string> = {
-  GPU: 'cards',
-  Memory: 'generations',
-  Processor: 'processors',
+  GPU: 'card đồ họa',
+  'Bộ nhớ': 'thế hệ',
+  'Vi xử lý': 'vi xử lý',
 };
 /** Menus whose every scale is a whole product, so they are counted as such. */
 const products: Record<string, string> = {
-  Motherboard: 'boards',
-  'Power supply': 'models',
+  'Bo mạch chủ': 'bo mạch chủ',
+  'Bộ nguồn': 'mẫu nguồn',
 };
 
-/** The line under a menu: "5 cards · 17 scales", "3 boards", "1 scale inside". */
+/** The line under a menu: "5 card đồ họa · 17 cấp độ", "3 bo mạch chủ", "1 cấp độ bên trong". */
 function menuNote(label: string, scales: number, submenus: number) {
   if (submenus > 0)
-    return `${submenus} ${dropdowns[label] ?? 'models'} · ${scales} scales`;
+    return `${submenus} ${dropdowns[label] ?? 'mẫu'} · ${scales} cấp độ`;
   if (products[label]) return `${scales} ${products[label]}`;
-  return `${scales} ${scales === 1 ? 'scale' : 'scales'} inside`;
+  return `${scales} cấp độ bên trong`;
 }
 
 type Props = {
@@ -164,12 +164,12 @@ export default function ScaleNav({
     <div className="explore-section">
       <button
         className="mobile-close"
-        aria-label="Close systems"
+        aria-label="Đóng danh sách hệ thống"
         onClick={onClose}
       >
         <X size={17} />
       </button>
-      <nav className="system-picker" aria-label="Choose a system">
+      <nav className="system-picker" aria-label="Chọn hệ thống">
         {systemRoots.map((root) => {
           const Icon = levelIcon[root];
           return (
@@ -183,9 +183,9 @@ export default function ScaleNav({
               </span>
               <strong>
                 {root === 'pc'
-                  ? 'Desktop PC'
+                  ? 'PC để bàn'
                   : root === 'legion'
-                    ? 'Laptops'
+                    ? 'Laptop'
                     : 'Mac'}
               </strong>
             </button>
@@ -195,18 +195,18 @@ export default function ScaleNav({
       <button className="compare-button" onClick={onCompare}>
         <GitCompareArrows size={16} />
         <span>
-          <strong>Compare components</strong>
+          <strong>So sánh linh kiện</strong>
         </span>
         <ChevronRight size={14} />
       </button>
       <button className="compare-button build-button" onClick={onBuild}>
         <Wrench size={16} />
         <span>
-          <strong>Build your own PC</strong>
+          <strong>Tự lắp cấu hình PC</strong>
         </span>
         <ChevronRight size={14} />
       </button>
-      <nav className="scale-navigation" aria-label="Exploration scale">
+      <nav className="scale-navigation" aria-label="Cấp độ khám phá">
         <button
           className={level === rootLevel ? 'active' : ''}
           aria-current={level === rootLevel ? 'true' : undefined}
@@ -246,7 +246,7 @@ export default function ScaleNav({
                   <small>
                     {levels[id].detailed
                       ? levels[id].summary
-                      : levels[id].summary + ' · placeholder'}
+                      : levels[id].summary + ' · mô hình tạm'}
                   </small>
                 </div>
               </button>
@@ -312,8 +312,7 @@ export default function ScaleNav({
                               {sub.label}
                               <small>
                                 {sub.note ? sub.note + ' · ' : ''}
-                                {sub.levels.length}{' '}
-                                {sub.levels.length === 1 ? 'scale' : 'scales'}
+                                {sub.levels.length} cấp độ
                               </small>
                             </div>
                             <ChevronDown size={13} />

@@ -21,9 +21,9 @@ export const KINDS = ['issue', 'idea', 'other'] as const;
 export type Kind = (typeof KINDS)[number];
 
 export const KIND_LABELS: Record<Kind, string> = {
-  issue: 'Issue or mistake',
-  idea: 'Idea or request',
-  other: 'Collaboration or something else',
+  issue: 'Báo lỗi hoặc sai sót',
+  idea: 'Ý tưởng hoặc đề xuất',
+  other: 'Hợp tác hoặc nội dung khác',
 };
 
 /** What the visitor is typing. Kept while the dialog is closed. */

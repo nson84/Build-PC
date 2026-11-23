@@ -13,16 +13,16 @@ import type { Category } from './concept.ts';
 
 /** Picker headings, in display order. Empty categories are not shown. */
 const categoryDefinitions = [
-  { id: 'systems', label: 'Complete systems' },
-  { id: 'boards', label: 'Boards' },
-  { id: 'processors', label: 'Processors' },
-  { id: 'graphics', label: 'Graphics' },
-  { id: 'memory', label: 'Memory' },
-  { id: 'storage', label: 'Storage' },
-  { id: 'cooling', label: 'Cooling' },
-  { id: 'power', label: 'Power & batteries' },
-  { id: 'displays', label: 'Displays' },
-  { id: 'chassis', label: 'Chassis' },
+  { id: 'systems', label: 'Hệ thống hoàn chỉnh' },
+  { id: 'boards', label: 'Bo mạch chủ' },
+  { id: 'processors', label: 'Vi xử lý (CPU)' },
+  { id: 'graphics', label: 'Card đồ họa (GPU)' },
+  { id: 'memory', label: 'Bộ nhớ (RAM)' },
+  { id: 'storage', label: 'Lưu trữ' },
+  { id: 'cooling', label: 'Tản nhiệt' },
+  { id: 'power', label: 'Nguồn & pin' },
+  { id: 'displays', label: 'Màn hình' },
+  { id: 'chassis', label: 'Vỏ máy' },
 ] as const;
 
 export type ComparisonCategoryId = (typeof categoryDefinitions)[number]['id'];
